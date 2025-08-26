@@ -1,7 +1,13 @@
-name: Run Katalon Android Tests
+name: Run Katalon Android Tests from Qase
 
+# Izinkan workflow ini untuk dipicu secara manual (WAJIB)
+# dan tambahkan input untuk menerima ID dari Qase
 on:
   workflow_dispatch:
+    inputs:
+      qase_run_id:
+        description: 'ID of the Qase Test Run'
+        required: true
 
 jobs:
   katalon_android:
@@ -21,14 +27,11 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 29
-          target: default
-          arch: x86_64
           emulator-boot-timeout: 600
           script: |
             adb shell settings put global window_animation_scale 0
             adb shell settings put global transition_animation_scale 0
             adb shell settings put global animator_duration_scale 0
-            adb shell input keyevent 82
 
       - name: Install Appium
         run: npm install -g appium
@@ -50,34 +53,18 @@ jobs:
             -testSuitePath="Test Suites/Smoke Tests for Mobile Testing" \
             -executionProfile="default" \
             -browserType="Mobile" \
-            -reportFolder=Reports # Ensure report is generated here
+            -reportFolder=Reports
 
-      # (Optional) You can keep this step to upload the raw report as an artifact
-      - name: Upload report artifact
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: katalon-report
-          path: Reports/
-
-      # ✅ CORRECTED STEP: Publish test results to Qase
+      # ✅ LANGKAH YANG DIPERBARUI
       - name: Publish to Qase
-        if: always() # This ensures results are published even if tests fail
+        if: always()
         uses: qase-tms/qase-github-reporter@v2
         with:
-          # Your Qase API token secret
           api-token: ${{ secrets.QASE_API_KEY }}
-
-          # Your Qase project code
           project-code: 'MKQ'
-
-          # The format of the report Katalon generates
           reporter: junit
-
-          # The path to the XML report file. 
-          # Katalon usually puts it in a sub-folder inside Reports.
           path: 'Reports/**/*.xml'
           
-          # This creates a new run with a useful name
-          run-name: 'Android Test Run via GitHub Actions'
+          # Gunakan run-id yang dikirim dari Qase, JANGAN gunakan run-name
+          run-id: ${{ github.event.inputs.qase_run_id }}
           run-complete: true
