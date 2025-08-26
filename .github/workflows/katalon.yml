@@ -1,24 +1,13 @@
-name: Run Katalon from Qase & Report Results
+name: Run Katalon Android Tests
 
 on:
   workflow_dispatch:
-    inputs:
-      qase_run_id:
-        description: 'ID of the Qase Test Run'
-        required: true
 
 jobs:
   katalon_android:
     runs-on: ubuntu-latest
 
     steps:
-      # LANGKAH DEBUGGING BARU: Tampilkan isi file workflow ini
-      - name: 🧐 Show Workflow File Content
-        run: |
-          echo "--- Displaying content of the workflow file that is running ---"
-          cat ${{ github.workflow }}
-          echo "--- End of workflow file ---"
-
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -39,6 +28,7 @@ jobs:
             adb shell settings put global window_animation_scale 0
             adb shell settings put global transition_animation_scale 0
             adb shell settings put global animator_duration_scale 0
+            adb shell input keyevent 82
 
       - name: Install Appium
         run: npm install -g appium
@@ -62,22 +52,14 @@ jobs:
             -browserType="Mobile" \
             -reportFolder=Reports
 
-      - name: Inspect Report File
-        if: always()
-        run: |
-          echo "--- Listing all files in Reports directory ---"
-          ls -R Reports
-          echo "--- Attempting to print content of XML report files ---"
-          find Reports -type f -name "*.xml" -print -exec cat {} \;
-          echo "--- End of report content ---"
-
       - name: Publish to Qase
         if: always()
-        uses: qase-tms/qase-action@v2
+        # PASTIKAN NAMA ACTION DI BAWAH INI SAMA PERSIS
+        uses: qase-tms/qase-github-reporter@v3
         with:
           api-token: ${{ secrets.QASE_API_KEY }}
           project-code: 'MKQ'
           reporter: junit
           path: 'Reports/**/*.xml'
-          run-id: ${{ github.event.inputs.qase_run_id }}
+          run-name: 'Manual Test Run from GitHub - ${{ github.run_id }}'
           run-complete: true
