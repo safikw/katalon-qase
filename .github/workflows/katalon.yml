@@ -1,8 +1,8 @@
 name: Run Katalon Android Tests
 
 on:
-  workflow_dispatch:   # Bisa dijalankan manual dari GitHub
-  repository_dispatch: # Bisa ditrigger Qase lewat API
+  workflow_dispatch:
+  repository_dispatch:
 
 jobs:
   katalon_android:
@@ -18,38 +18,13 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Install Android SDK and Emulator
-        run: |
-          export ANDROID_HOME=/usr/local/lib/android/sdk
-          sudo mkdir -p $ANDROID_HOME/cmdline-tools
-          sudo chown $USER:$USER $ANDROID_HOME/cmdline-tools
-          mkdir -p $ANDROID_HOME/cmdline-tools/latest
-          wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdline-tools.zip
-          unzip cmdline-tools.zip -d $ANDROID_HOME/cmdline-tools/tmp
-          mv $ANDROID_HOME/cmdline-tools/tmp/cmdline-tools $ANDROID_HOME/cmdline-tools/latest
-          rm -rf $ANDROID_HOME/cmdline-tools/tmp
-
-          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
-          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.0" "system-images;android-33;google_apis;x86_64" "emulator"
-
-      - name: Create and Start Emulator
-        run: |
-          export ANDROID_HOME=/usr/local/lib/android/sdk
-          export PATH=$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$PATH
-          
-          # Tambahkan baris ini untuk membuat direktori AVD secara manual
-          mkdir -p $HOME/.android/avd
-
-          # Lanjutkan perintah Anda, sekarang seharusnya berhasil
-          echo no | $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager create avd -n test -k "system-images;android-33;google_apis;x86_64" --force
-          
-          # Start emulator di background
-          nohup $ANDROID_HOME/emulator/emulator -avd test -no-window -no-audio -no-snapshot &
-          
-          # Tunggu emulator siap
-          adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;'
-          adb shell input keyevent 82 # Unlock screen
-          sleep 10 # Beri jeda tambahan jika perlu    
+      - name: Start Android Emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 33
+          target: google_apis
+          arch: x86_64
+          script: adb shell input keyevent 82
 
       - name: Install Appium
         run: npm install -g appium
