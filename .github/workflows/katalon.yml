@@ -1,7 +1,5 @@
 name: Run Katalon Android Tests from Qase
 
-# Izinkan workflow ini untuk dipicu secara manual (WAJIB)
-# dan tambahkan input untuk menerima ID dari Qase
 on:
   workflow_dispatch:
     inputs:
@@ -17,6 +15,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # ... (langkah-langkah setup Java, Emulator, Katalon, dll tetap sama)
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
@@ -55,16 +54,19 @@ jobs:
             -browserType="Mobile" \
             -reportFolder=Reports
 
-      # ✅ LANGKAH YANG DIPERBARUI
-      - name: Publish to Qase
+      # ✅ LANGKAH DEBUGGING: Cetak ID yang diterima dari Qase
+      - name: 🧐 Debug Qase Run ID
         if: always()
-        uses: qase-tms/qase-github-reporter@v2
+        run: echo "The received Qase Run ID is: ${{ github.event.inputs.qase_run_id }}"
+
+      # ✅ LANGKAH DIPERBARUI: Menggunakan versi @v3
+      - name: 🚀 Publish to Qase
+        if: always()
+        uses: qase-tms/qase-github-reporter@v3 # <-- DIUBAH KE v3
         with:
           api-token: ${{ secrets.QASE_API_KEY }}
           project-code: 'MKQ'
           reporter: junit
           path: 'Reports/**/*.xml'
-          
-          # Gunakan run-id yang dikirim dari Qase, JANGAN gunakan run-name
           run-id: ${{ github.event.inputs.qase_run_id }}
           run-complete: true
