@@ -49,7 +49,7 @@ jobs:
             -browserType="Mobile"
 
       - name: Upload report artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v
         with:
           name: katalon-report
           path: Reports/**
