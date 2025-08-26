@@ -1,4 +1,4 @@
-name: Run Katalon Android Tests
+name: Run Katalon Android Testsasdasada
 
 on:
   workflow_dispatch:
