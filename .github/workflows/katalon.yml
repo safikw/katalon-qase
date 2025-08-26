@@ -1,5 +1,8 @@
-name: Run Katalon Android Tests from Qase
+# Nama workflow, bisa Anda sesuaikan
+name: Run Katalon from Qase & Report Results
 
+# Pemicu: Hanya bisa dijalankan secara manual dari UI GitHub atau via API (seperti dari Qase)
+# Bagian 'inputs' ini WAJIB ada agar bisa menerima ID dari Qase
 on:
   workflow_dispatch:
     inputs:
@@ -9,41 +12,50 @@ on:
 
 jobs:
   katalon_android:
+    # Selalu jalankan di environment terbaru yang disediakan GitHub
     runs-on: ubuntu-latest
 
     steps:
+      # Langkah 1: Mengunduh kode dari repository Anda
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # ... (langkah-langkah setup Java, Emulator, Katalon, dll tetap sama)
+      # Langkah 2: Setup environment Java versi 17
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
 
+      # Langkah 3: Menjalankan Emulator Android
       - name: Start Android Emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 29
+          target: default
+          arch: x86_64
           emulator-boot-timeout: 600
           script: |
             adb shell settings put global window_animation_scale 0
             adb shell settings put global transition_animation_scale 0
             adb shell settings put global animator_duration_scale 0
 
+      # Langkah 4: Install Appium
       - name: Install Appium
         run: npm install -g appium
 
+      # Langkah 5: Mengunduh dan install Katalon Studio Engine
       - name: Install Katalon
         run: |
           wget https://github.com/katalon-studio/katalon-studio/releases/download/v8.6.5/Katalon_Studio_Engine_Linux_64-8.6.5.tar.gz
           tar -xvzf Katalon_Studio_Engine_Linux_64-8.6.5.tar.gz
           mv Katalon_Studio_Engine_Linux_64-8.6.5 katalon
       
+      # Langkah 6: Menjalankan virtual display untuk UI testing di environment non-GUI
       - name: Start virtual display
         uses: GabrielBB/xvfb-action@v1
 
+      # Langkah 7: Menjalankan tes Katalon Anda
       - name: Run Katalon Android Tests
         run: |
           ./katalon/katalonc \
@@ -54,19 +66,37 @@ jobs:
             -browserType="Mobile" \
             -reportFolder=Reports
 
-      # ✅ LANGKAH DEBUGGING: Cetak ID yang diterima dari Qase
-      - name: 🧐 Debug Qase Run ID
-        if: always()
-        run: echo "The received Qase Run ID is: ${{ github.event.inputs.qase_run_id }}"
+      # LANGKAH 8 (DEBUGGING): Mencetak isi file report untuk diperiksa
+      # Step ini akan membantu kita melihat apakah file report sudah benar atau kosong
+      - name: 🧐 Inspect Report File
+        if: always() # Selalu jalankan, bahkan jika tes gagal
+        run: |
+          echo "--- Listing all files in Reports directory ---"
+          ls -R Reports
+          echo "--- Attempting to print content of XML report files ---"
+          find Reports -type f -name "*.xml" -print -exec cat {} \;
+          echo "--- End of report content ---"
 
-      # ✅ LANGKAH DIPERBARUI: Menggunakan versi @v3
+      # LANGKAH 9 (FINAL): Mengirim hasil tes ke Qase
+      # Menggunakan versi terbaru @v3 dan run-id yang dikirim dari Qase
       - name: 🚀 Publish to Qase
-        if: always()
-        uses: qase-tms/qase-github-reporter@v3 # <-- DIUBAH KE v3
+        if: always() # Selalu jalankan, bahkan jika tes gagal
+        uses: qase-tms/qase-github-reporter@v3
         with:
+          # Nama secret harus cocok dengan yang Anda buat di GitHub Settings
           api-token: ${{ secrets.QASE_API_KEY }}
+          
+          # Kode proyek Anda di Qase
           project-code: 'MKQ'
+          
+          # Format report yang dihasilkan Katalon
           reporter: junit
+          
+          # Path ke file report. '**' berarti mencari di semua subfolder
           path: 'Reports/**/*.xml'
+          
+          # Gunakan ID yang dikirim dari Qase. INI BAGIAN KUNCI.
           run-id: ${{ github.event.inputs.qase_run_id }}
+          
+          # Tandai test run sebagai selesai setelah hasil diunggah
           run-complete: true
