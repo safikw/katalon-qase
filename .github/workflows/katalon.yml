@@ -16,13 +16,20 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '11'
+          java-version: '17'
 
       - name: Install Android SDK
-        uses: android-actions/setup-android@v2
-        with:
-          api-level: 33
-          build-tools: 33.0.0
+        run: |
+            sudo mkdir -p /usr/local/lib/android/sdk
+            sudo chown $USER:$USER /usr/local/lib/android/sdk
+            export ANDROID_HOME=/usr/local/lib/android/sdk
+            wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdline-tools.zip
+            unzip cmdline-tools.zip -d $ANDROID_HOME
+            mkdir -p $ANDROID_HOME/cmdline-tools/latest
+            mv $ANDROID_HOME/cmdline-tools/* $ANDROID_HOME/cmdline-tools/latest/
+            yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
+            $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.0"
+
 
       - name: Create and Start Emulator
         run: |
