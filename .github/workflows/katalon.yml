@@ -1,8 +1,7 @@
 name: Run Katalon Android Tests
 
 on:
-  workflow_dispatch:   # Bisa dijalankan manual dari GitHub
-  repository_dispatch: # Bisa ditrigger Qase lewat API
+  workflow_dispatch:
 
 jobs:
   katalon_android:
@@ -18,27 +17,18 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Install Android SDK and Emulator
-        run: |
-          export ANDROID_HOME=/usr/local/lib/android/sdk
-          sudo mkdir -p $ANDROID_HOME/cmdline-tools
-          sudo chown $USER:$USER $ANDROID_HOME/cmdline-tools
-          mkdir -p $ANDROID_HOME/cmdline-tools/latest
-          wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdline-tools.zip
-          unzip cmdline-tools.zip -d $ANDROID_HOME/cmdline-tools/tmp
-          mv $ANDROID_HOME/cmdline-tools/tmp/cmdline-tools $ANDROID_HOME/cmdline-tools/latest
-          rm -rf $ANDROID_HOME/cmdline-tools/tmp
-
-          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
-          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.0" "system-images;android-33;google_apis;x86_64" "emulator"
-
-      - name: Create and Start Emulator
-        run: |
-          echo no | $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager create avd -n test -k "system-images;android-33;google_apis;x86_64" --force
-          $ANDROID_HOME/emulator/emulator -avd test -no-window -no-audio -no-snapshot &
-          adb wait-for-device
-          adb shell input keyevent 82
-          sleep 10
+      - name: Start Android Emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          target: default
+          arch: x86_64
+          emulator-boot-timeout: 600
+          script: |
+            adb shell settings put global window_animation_scale 0
+            adb shell settings put global transition_animation_scale 0
+            adb shell settings put global animator_duration_scale 0
+            adb shell input keyevent 82
 
       - name: Install Appium
         run: npm install -g appium
@@ -48,6 +38,9 @@ jobs:
           wget https://github.com/katalon-studio/katalon-studio/releases/download/v8.6.5/Katalon_Studio_Engine_Linux_64-8.6.5.tar.gz
           tar -xvzf Katalon_Studio_Engine_Linux_64-8.6.5.tar.gz
           mv Katalon_Studio_Engine_Linux_64-8.6.5 katalon
+      
+      - name: Start virtual display
+        uses: GabrielBB/xvfb-action@v1
 
       - name: Run Katalon Android Tests
         run: |
@@ -56,17 +49,17 @@ jobs:
             -retry=0 \
             -testSuitePath="Test Suites/Smoke Tests for Mobile Testing" \
             -executionProfile="default" \
-            -browserType="Mobile"
+            -browserType="Mobile" \
+            -reportFolder=Reports
 
-      - name: Upload report artifact
-        uses: actions/upload-artifact@v4
+      - name: Publish to Qase using Fork
+        if: always()
+        # MENGGUNAKAN SALINAN (FORK) DARI REPOSITORY ANDA SENDIRI
+        uses: saflow/qase-github-reporter@v3
         with:
-          name: katalon-report
-          path: Reports/**
-
-      - name: Push results to Qase (dummy)
-        run: |
-          curl -X POST "https://api.qase.io/v1/result/YOUR_PROJECT_CODE" \
-          -H "Token: ${{ secrets.QASE_API_KEY }}" \
-          -H "Content-Type: application/json" \
-          -d '{"status": "passed"}'
+          api-token: ${{ secrets.QASE_API_KEY }}
+          project-code: 'MKQ'
+          reporter: junit
+          path: 'Reports/**/*.xml'
+          run-name: 'Manual Test Run from GitHub - ${{ github.run_id }}'
+          run-complete: true
