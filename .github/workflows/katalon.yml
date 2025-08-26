@@ -12,6 +12,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # LANGKAH DEBUGGING BARU: Tampilkan isi file workflow ini
+      - name: 🧐 Show Workflow File Content
+        run: |
+          echo "--- Displaying content of the workflow file that is running ---"
+          cat ${{ github.workflow }}
+          echo "--- End of workflow file ---"
+
       - name: Checkout code
         uses: actions/checkout@v3
 
