@@ -18,26 +18,27 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Install Android SDK
+      - name: Install Android SDK and Emulator
         run: |
-          sudo mkdir -p /usr/local/lib/android/sdk/cmdline-tools
-          sudo chown $USER:$USER /usr/local/lib/android/sdk/cmdline-tools
           export ANDROID_HOME=/usr/local/lib/android/sdk
+          sudo mkdir -p $ANDROID_HOME/cmdline-tools
+          sudo chown $USER:$USER $ANDROID_HOME/cmdline-tools
           mkdir -p $ANDROID_HOME/cmdline-tools/latest
           wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdline-tools.zip
           unzip cmdline-tools.zip -d $ANDROID_HOME/cmdline-tools/tmp
           mv $ANDROID_HOME/cmdline-tools/tmp/cmdline-tools $ANDROID_HOME/cmdline-tools/latest
           rm -rf $ANDROID_HOME/cmdline-tools/tmp
-          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
-          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.0" "system-images;android-33;google_apis;x86_64"
 
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.0" "system-images;android-33;google_apis;x86_64" "emulator"
 
       - name: Create and Start Emulator
         run: |
-          echo no | $ANDROID_HOME/cmdline-tools/latest/cmdline-tools/bin/avdmanager create avd -n test -k "system-images;android-33;google_apis;x86_64" --force
+          echo no | $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager create avd -n test -k "system-images;android-33;google_apis;x86_64" --force
           $ANDROID_HOME/emulator/emulator -avd test -no-window -no-audio -no-snapshot &
           adb wait-for-device
           adb shell input keyevent 82
+          sleep 10
 
       - name: Install Appium
         run: npm install -g appium
@@ -63,7 +64,7 @@ jobs:
           name: katalon-report
           path: Reports/**
 
-      - name: Push results to Qase
+      - name: Push results to Qase (dummy)
         run: |
           curl -X POST "https://api.qase.io/v1/result/YOUR_PROJECT_CODE" \
           -H "Token: ${{ secrets.QASE_API_KEY }}" \
