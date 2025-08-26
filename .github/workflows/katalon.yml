@@ -21,8 +21,8 @@ jobs:
       - name: Start Android Emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 33
-          target: google_apis
+          api-level: 29
+          target: default
           arch: x86_64
           script: adb shell input keyevent 82
 
