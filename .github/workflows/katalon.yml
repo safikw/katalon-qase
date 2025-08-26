@@ -1,9 +1,3 @@
-name: Run Katalon Android Tests
-
-on:
-  workflow_dispatch:
-  repository_dispatch:
-
 jobs:
   katalon_android:
     runs-on: ubuntu-latest
@@ -24,7 +18,12 @@ jobs:
           api-level: 29
           target: default
           arch: x86_64
-          script: adb shell input keyevent 82
+          emulator-boot-timeout: 600
+          script: |
+            adb shell settings put global window_animation_scale 0
+            adb shell settings put global transition_animation_scale 0
+            adb shell settings put global animator_duration_scale 0
+            adb shell input keyevent 82
 
       - name: Install Appium
         run: npm install -g appium
@@ -34,6 +33,9 @@ jobs:
           wget https://github.com/katalon-studio/katalon-studio/releases/download/v8.6.5/Katalon_Studio_Engine_Linux_64-8.6.5.tar.gz
           tar -xvzf Katalon_Studio_Engine_Linux_64-8.6.5.tar.gz
           mv Katalon_Studio_Engine_Linux_64-8.6.5 katalon
+      
+      - name: Start virtual display
+        uses: GabrielBB/xvfb-action@v1
 
       - name: Run Katalon Android Tests
         run: |
