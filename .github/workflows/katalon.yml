@@ -73,7 +73,7 @@ jobs:
 
       - name: Publish to Qase
         if: always()
-        uses: qase-tms/qase-github-reporter@v3
+        uses: qase-tms/qase-action@v2
         with:
           api-token: ${{ secrets.QASE_API_KEY }}
           project-code: 'MKQ'
