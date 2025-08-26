@@ -36,11 +36,20 @@ jobs:
         run: |
           export ANDROID_HOME=/usr/local/lib/android/sdk
           export PATH=$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$PATH
+          
+          # Tambahkan baris ini untuk membuat direktori AVD secara manual
+          mkdir -p $HOME/.android/avd
+
+          # Lanjutkan perintah Anda, sekarang seharusnya berhasil
           echo no | $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager create avd -n test -k "system-images;android-33;google_apis;x86_64" --force
-          $ANDROID_HOME/emulator/emulator -avd test -no-window -no-audio -no-snapshot &
-          adb wait-for-device
-          adb shell input keyevent 82
-          sleep 10
+          
+          # Start emulator di background
+          nohup $ANDROID_HOME/emulator/emulator -avd test -no-window -no-audio -no-snapshot &
+          
+          # Tunggu emulator siap
+          adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;'
+          adb shell input keyevent 82 # Unlock screen
+          sleep 10 # Beri jeda tambahan jika perlu    
 
       - name: Install Appium
         run: npm install -g appium
