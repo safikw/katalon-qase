@@ -34,6 +34,8 @@ jobs:
 
       - name: Create and Start Emulator
         run: |
+          export ANDROID_HOME=/usr/local/lib/android/sdk
+          export PATH=$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$PATH
           echo no | $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager create avd -n test -k "system-images;android-33;google_apis;x86_64" --force
           $ANDROID_HOME/emulator/emulator -avd test -no-window -no-audio -no-snapshot &
           adb wait-for-device
