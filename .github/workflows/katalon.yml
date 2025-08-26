@@ -1,3 +1,8 @@
+name: Run Katalon Android Tests
+
+on:
+  workflow_dispatch:
+
 jobs:
   katalon_android:
     runs-on: ubuntu-latest
