@@ -1,8 +1,8 @@
 name: Run Katalon Android Tests
 
 on:
-  workflow_dispatch:   # bisa dijalankan manual dari GitHub
-  repository_dispatch: # bisa ditrigger Qase lewat API
+  workflow_dispatch:   # Bisa dijalankan manual dari GitHub
+  repository_dispatch: # Bisa ditrigger Qase lewat API
 
 jobs:
   katalon_android:
@@ -26,13 +26,12 @@ jobs:
             wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdline-tools.zip
             mkdir -p $ANDROID_HOME/cmdline-tools/latest
             unzip cmdline-tools.zip -d $ANDROID_HOME/cmdline-tools/latest
-            yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
-            $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.0"
-
+            yes | $ANDROID_HOME/cmdline-tools/latest/cmdline-tools/bin/sdkmanager --licenses
+            $ANDROID_HOME/cmdline-tools/latest/cmdline-tools/bin/sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.0" "system-images;android-33;google_apis;x86_64"
 
       - name: Create and Start Emulator
         run: |
-          echo no | $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager create avd -n test -k "system-images;android-33;google_apis;x86_64" --force
+          echo no | $ANDROID_HOME/cmdline-tools/latest/cmdline-tools/bin/avdmanager create avd -n test -k "system-images;android-33;google_apis;x86_64" --force
           $ANDROID_HOME/emulator/emulator -avd test -no-window -no-audio -no-snapshot &
           adb wait-for-device
           adb shell input keyevent 82
