@@ -1,8 +1,12 @@
-name: Run Katalon Android Tests
+name: Run Katalon and Report via Qase CLI
 
 on:
-  workflow_dispatch:   # Bisa dijalankan manual dari GitHub
-  repository_dispatch: # Bisa ditrigger Qase lewat API
+  workflow_dispatch:
+    inputs:
+      qase_run_id:
+        description: 'Qase Run ID to update'
+        required: false
+  repository_dispatch:
 
 jobs:
   katalon_android:
@@ -18,27 +22,18 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Install Android SDK and Emulator
-        run: |
-          export ANDROID_HOME=/usr/local/lib/android/sdk
-          sudo mkdir -p $ANDROID_HOME/cmdline-tools
-          sudo chown $USER:$USER $ANDROID_HOME/cmdline-tools
-          mkdir -p $ANDROID_HOME/cmdline-tools/latest
-          wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdline-tools.zip
-          unzip cmdline-tools.zip -d $ANDROID_HOME/cmdline-tools/tmp
-          mv $ANDROID_HOME/cmdline-tools/tmp/cmdline-tools $ANDROID_HOME/cmdline-tools/latest
-          rm -rf $ANDROID_HOME/cmdline-tools/tmp
-
-          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
-          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.0" "system-images;android-33;google_apis;x86_64" "emulator"
-
-      - name: Create and Start Emulator
-        run: |
-          echo no | $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager create avd -n test -k "system-images;android-33;google_apis;x86_64" --force
-          $ANDROID_HOME/emulator/emulator -avd test -no-window -no-audio -no-snapshot &
-          adb wait-for-device
-          adb shell input keyevent 82
-          sleep 10
+      - name: Start Android Emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          target: default
+          arch: x86_64
+          emulator-boot-timeout: 600
+          script: |
+            adb shell settings put global window_animation_scale 0
+            adb shell settings put global transition_animation_scale 0
+            adb shell settings put global animator_duration_scale 0
+            adb shell input keyevent 82
 
       - name: Install Appium
         run: npm install -g appium
@@ -48,6 +43,9 @@ jobs:
           wget https://github.com/katalon-studio/katalon-studio/releases/download/v8.6.5/Katalon_Studio_Engine_Linux_64-8.6.5.tar.gz
           tar -xvzf Katalon_Studio_Engine_Linux_64-8.6.5.tar.gz
           mv Katalon_Studio_Engine_Linux_64-8.6.5 katalon
+      
+      - name: Start virtual display
+        uses: GabrielBB/xvfb-action@v1
 
       - name: Run Katalon Android Tests
         run: |
@@ -56,17 +54,28 @@ jobs:
             -retry=0 \
             -testSuitePath="Test Suites/Smoke Tests for Mobile Testing" \
             -executionProfile="default" \
-            -browserType="Mobile"
+            -browserType="Mobile" \
+            -reportFolder=Reports
 
-      - name: Upload report artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: katalon-report
-          path: Reports/**
-
-      - name: Push results to Qase (dummy)
+      - name: Publish to Qase using Qase CLI
+        if: always()
         run: |
-          curl -X POST "https://api.qase.io/v1/result/MKQ" \
-          -H "Token: ${{ secrets.QASE_API_KEY }}" \
-          -H "Content-Type: application/json" \
-          -d '{"status": "passed"}'
+          # Dapatkan Run ID yang dikirim dari Qase
+          QASE_RUN_ID="${{ github.event.client_payload.qase_run_id || github.event.inputs.qase_run_id }}"
+
+          # Hanya jalankan jika Run ID ada (artinya ditrigger dari Qase)
+          if [ -z "$QASE_RUN_ID" ]; then
+            echo "Qase Run ID not provided. Skipping result upload."
+          else
+            echo "Uploading results to Qase Test Run ID: $QASE_RUN_ID"
+            
+            # Download Qase CLI
+            wget https://github.com/qase-tms/qase-cli/releases/latest/download/qase-linux-amd64 -O qase
+            chmod +x qase
+
+            # Jalankan Qase CLI untuk mengunggah report dari folder Reports
+            ./qase reporter --project-code MKQ --run-id "$QASE_RUN_ID" --path Reports/ --format junit
+          fi
+        env:
+          # Pastikan nama secret Anda adalah QASE_API_KEY
+          QASE_API_TOKEN: ${{ secrets.QASE_API_KEY }}
