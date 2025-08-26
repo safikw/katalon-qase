@@ -20,14 +20,19 @@ jobs:
 
       - name: Install Android SDK
         run: |
-            sudo mkdir -p /usr/local/lib/android/sdk
-            sudo chown $USER:$USER /usr/local/lib/android/sdk
-            export ANDROID_HOME=/usr/local/lib/android/sdk
-            wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdline-tools.zip
-            mkdir -p $ANDROID_HOME/cmdline-tools/latest
-            unzip cmdline-tools.zip -d $ANDROID_HOME/cmdline-tools/latest
-            yes | $ANDROID_HOME/cmdline-tools/latest/cmdline-tools/bin/sdkmanager --licenses
-            $ANDROID_HOME/cmdline-tools/latest/cmdline-tools/bin/sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.0" "system-images;android-33;google_apis;x86_64"
+          sudo mkdir -p /usr/local/lib/android/sdk/cmdline-tools
+          sudo chown $USER:$USER /usr/local/lib/android/sdk/cmdline-tools
+          export ANDROID_HOME=/usr/local/lib/android/sdk
+          mkdir -p $ANDROID_HOME/cmdline-tools/latest
+          wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdline-tools.zip
+          unzip cmdline-tools.zip -d $ANDROID_HOME/cmdline-tools/tmp
+          mv $ANDROID_HOME/cmdline-tools/tmp/cmdline-tools $ANDROID_HOME/cmdline-tools/latest
+          rm -rf $ANDROID_HOME/cmdline-tools/tmp
+
+          stall platform, build-tools, system image
+          | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
+          ROID_HOME/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.0" "system-images;android-33;google_apis;x86_64"
+
 
       - name: Create and Start Emulator
         run: |
