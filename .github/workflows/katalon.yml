@@ -49,21 +49,35 @@ jobs:
             -retry=0 \
             -testSuitePath="Test Suites/Smoke Tests for Mobile Testing" \
             -executionProfile="default" \
-            -browserType="Mobile"
+            -browserType="Mobile" \
+            -reportFolder=Reports # Ensure report is generated here
 
+      # (Optional) You can keep this step to upload the raw report as an artifact
       - name: Upload report artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: katalon-report
-          path: Reports/**
+          path: Reports/
 
-      - name: Push results to Qase
-        run: |
-          curl -X POST "https://api.qase.io/v1/result/MKQ/1" \
-          -H "Token: ${{ secrets.QASE_API_KEY }}" \
-          -H "Content-Type: application/json" \
-          -d '{
-            "case_id": 2,
-            "status": "passed",
-            "comment": "Test passed via GitHub Actions"
-          }'
+      # ✅ CORRECTED STEP: Publish test results to Qase
+      - name: Publish to Qase
+        if: always() # This ensures results are published even if tests fail
+        uses: qase-tms/qase-github-reporter@v2
+        with:
+          # Your Qase API token secret
+          api-token: ${{ secrets.QASE_API_KEY }}
+
+          # Your Qase project code
+          project-code: 'MKQ'
+
+          # The format of the report Katalon generates
+          reporter: junit
+
+          # The path to the XML report file. 
+          # Katalon usually puts it in a sub-folder inside Reports.
+          path: 'Reports/**/*.xml'
+          
+          # This creates a new run with a useful name
+          run-name: 'Android Test Run via GitHub Actions'
+          run-complete: true
