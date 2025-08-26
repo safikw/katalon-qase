@@ -57,9 +57,13 @@ jobs:
           name: katalon-report
           path: Reports/**
 
-      - name: Push results to Qase (dummy)
+      - name: Push results to Qase
         run: |
-          curl -X POST "https://api.qase.io/v1/result/YOUR_PROJECT_CODE" \
+          curl -X POST "https://api.qase.io/v1/result/MKQ/1" \
           -H "Token: ${{ secrets.QASE_API_KEY }}" \
           -H "Content-Type: application/json" \
-          -d '{"status": "passed"}'
+          -d '{
+            "case_id": 2,
+            "status": "passed",
+            "comment": "Test passed via GitHub Actions"
+          }'
