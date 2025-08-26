@@ -1,24 +1,13 @@
-name: Run Katalon from Qase
+name: Run Katalon Android Tests
 
 on:
   workflow_dispatch:
-    inputs:
-      qase_run_id:
-        description: 'ID of the Qase Test Run'
-        required: true
 
 jobs:
   katalon_android:
     runs-on: ubuntu-latest
 
     steps:
-      # LANGKAH DEBUGGING BARU: Tampilkan isi file workflow ini
-      - name: 🧐 Show Workflow File Content
-        run: |
-          echo "--- Displaying content of the workflow file that is running ---"
-          cat ${{ github.workflow }}
-          echo "--- End of workflow file ---"
-
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -73,11 +62,13 @@ jobs:
 
       - name: Publish to Qase
         if: always()
-        uses: qase-tms/qase-action@v2
+        # INI BAGIAN YANG DIPERBAIKI: NAMA ACTION SUDAH BENAR
+        uses: qase-tms/qase-github-reporter@v3
         with:
           api-token: ${{ secrets.QASE_API_KEY }}
           project-code: 'MKQ'
           reporter: junit
           path: 'Reports/**/*.xml'
-          run-id: ${{ github.event.inputs.qase_run_id }}
+          # Karena kita menjalankan manual dari GitHub, kita buat nama run baru
+          run-name: 'Manual Test Run from GitHub - ${{ github.run_id }}'
           run-complete: true
