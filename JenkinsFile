@@ -40,13 +40,16 @@ stage('Run Katalon Tests') {
     steps {
         sh '''
         KATALON_HOME="/opt/Katalon_Studio_Engine_Linux_arm64-10.2.4"
+        DEVICE_ID=$(adb devices | grep -w "device" | grep -v "List" | awk '{print $1}' | head -n1)
+          echo "Using device: $DEVICE_ID"
 "$KATALON_HOME/katalonc" \
+
     -projectPath="$(pwd)/Android Mobile Tests with Katalon Studio.prj" \
      -testSuitePath="Test Suites/Smoke Tests for Mobile Browsers" \
     -executionProfile="default" \
     -executionPlatform="Android" \
     -browserType="Android" \
-    -deviceId="sdk_gphone64_arm64" \\
+    -deviceId="$DEVICE_ID" \\
     -reportFolder=Reports \
     -apiKey="$KATALON_API_KEY"
         '''
