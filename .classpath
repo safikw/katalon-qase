@@ -5,238 +5,240 @@
 	<classpathentry kind="src" output="bin/listener" path="Test Listeners"/>
 	<classpathentry kind="src" output="bin/lib" path="Libs"/>
 	<classpathentry kind="src" output="bin/groovy" path="Include/scripts/groovy"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.kms.katalon.core_1.0.0.202507110620.jar" sourcepath="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/source/com.kms.katalon.core/com.kms.katalon.core-sources.jar">
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.kms.katalon.core_1.0.0.202508191006.jar" sourcepath="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/source/com.kms.katalon.core/com.kms.katalon.core-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="file:/Applications/Katalon%20Studio.app/Contents/Eclipse/configuration/resources/apidocs/com.kms.katalon.core/"/>
+			<attribute name="javadoc_location" value="file:/Applications/Katalon%20Studio%20Enterprise.app/Contents/Eclipse/configuration/resources/apidocs/com.kms.katalon.core/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/commons-logging-1.3.4.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/spring-context-5.3.19.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/jackson-coreutils-2.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/fontbox-3.0.4.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/byte-buddy-1.14.3.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/ecj-3.21.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/aalto-xml-1.0.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/wadl.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/mitm-2.1.5.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/repackaged-sikuli-api-1.0.2-standalone.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/log4j-api-2.17.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/objenesis-3.3.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/mockito-inline-5.2.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/dnsjava-3.6.2.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/mockito-core-5.2.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/jackson-coreutils-equivalence-1.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/browsermob-core-2.1.5.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/cglib-3.2.10.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/xmlbeans-3.1.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/jna-5.12.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/log4j-1.2-api-2.17.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/json-schema-validator-2.2.14.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/poi-3.17.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/soap-common-1.0.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/log4j-core-2.17.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/jzlib-1.1.3.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/commons-validator-1.6.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/soap-legacy-1.0.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/byte-buddy-agent-1.14.3.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/jasperreports-6.20.5.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/javax.servlet-api_3.1.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/poi-ooxml-schemas-3.17.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/kat-server.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/su.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/stax2-api-4.0.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/openpdf-1.3.30.jaspersoft.2.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/commons-collections4-4.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/selenium-shutterbug-1.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/pdfbox-io-3.0.4.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/poi-ooxml-3.17.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/pdfbox-3.0.4.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/commons-codec-1.10.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/uri-template-0.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/json-schema-core-1.2.14.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/aspectjweaver-1.9.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/groovy-3.0.17.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/aws-2.20.3-fat.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/jasperreports-fonts-6.20.5.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/jna-platform-5.12.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/java-client-9.2.3.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/soap-builder-1.0.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/proxy-vole-1.1.5-jar-with-dependencies.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/swagger-parser-1.0.67-fat.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/curvesapi-1.04.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/commons-javaflow-20060411.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/lib/littleproxy-1.1.0-beta-bmp-17.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/net.sf.supercsv.super-csv_2.4.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.apache.commons.commons-io_2.16.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.apache.commons.lang_2.6.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.google.gson_2.11.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.jsoup_1.14.3.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.apache.commons.dbutils_1.6.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.oracle.jdbc.ojdbc7_12.1.0.2.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.postgresql.jdbc_42.7.3.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.eclipse.osgi_3.21.0.v20240717-2103.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.kms.katalon.constant_1.0.0.202507110620.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.eclipse.persistence.eclipselink_2.7.11.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.kms.katalon.selenium-standalone_1.0.0.202507110620.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/atu.testrecorder.screen-recorder_2.1.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.google.guava_33.4.0.jre.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.kms.katalon.util_1.0.0.202507110620.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.apache.httpcomponents.httpclient_4.5.14.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.apache.httpcomponents.httpcore_4.4.16.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.apache.httpcomponents.httpmime_4.5.13.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.apache.commons.lang3_3.16.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.greenrobot.eventbus_3.1.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/net.bytebuddy.byte-buddy_1.15.11.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.junit_4.13.2.v20230809-1000.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.fasterxml.jackson.core.jackson-databind_2.17.2.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.fasterxml.jackson.core.jackson-core_2.17.2.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.fasterxml.jackson.core.jackson-annotations_2.17.2.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/slf4j.api_2.0.16.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.fusesource.jansi_1.17.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.kms.katalon.netlightbody_1.0.0.202507110620.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.kms.katalon.poi_1.0.0.202507110620.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.apache.commons.commons-text_1.10.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.kms.katalon.proxyvole_1.0.0.202507110620.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.microsoft.sqlserver.mssql-jdbc_6.2.2.jre8.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.github.kklisura.cdt.java-client_2.1.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/javax.websocket-api_1.1.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.glassfish.tyrus.container-grizzly-client_1.13.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.glassfish.grizzly.http-server_2.3.25.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.glassfish.grizzly.framework_2.3.25.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.glassfish.grizzly.http_2.3.25.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.glassfish.tyrus.client_1.13.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.glassfish.tyrus.core_1.13.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.glassfish.tyrus.spi_1.13.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/javassist_3.28.0.GA.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/graphql-java_22.3.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.glassfish.jaxb.runtime_2.3.6.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.glassfish.jaxb.txw2_2.3.6.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.dom4j_2.1.4.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.kms.katalon.groovy-extended_1.0.0.202507110620.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.sun.activation.javax.activation_1.2.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/jakarta.xml.bind-api_4.0.2.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.eclipse.jface_3.35.0.v20240820-2045.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.kms.katalon.logging_1.0.0.202507110620.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/json_20240303.0.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/assertj-core_3.25.3.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.networknt.json-schema-validator_1.0.66.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.kms.katalon.network.apache_1.0.0.202507110620.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.kms.katalon.network.core_1.0.0.202507110620.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/java-dataloader_3.3.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.apache.commons.collections_3.2.2.v201511171945.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.apache.commons.commons-collections4_4.4.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.apache.commons.digester_2.1.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/stax2-api_4.2.2.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.fasterxml.woodstox.woodstox-core_6.6.2.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.apache.commons.logging_1.2.0.v20180409-1502.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.kms.katalon.report.core_1.0.0.202507110620.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.apache.commons.commons-beanutils_1.9.4.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.seleniumhq.selenium.selenium-api_4.28.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.seleniumhq.selenium.selenium-remote-driver_4.28.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.seleniumhq.selenium.selenium-http_4.28.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/ch.qos.logback.classic_1.3.15.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/ch.qos.logback.core_1.3.15.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/log4j.over.slf4j_1.7.36.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.hamcrest.core_1.3.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.beanshell.bsh_2.0.0.0b4.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.apache.ant.launcher_1.9.6.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.seleniumhq.selenium.selenium-chrome-driver_4.28.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.seleniumhq.selenium.selenium-chromium-driver_4.28.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.seleniumhq.selenium.selenium-edge-driver_4.28.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.seleniumhq.selenium.selenium-firefox-driver_4.28.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.seleniumhq.selenium.selenium-safari-driver_4.28.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.seleniumhq.selenium.selenium-ie-driver_4.28.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.seleniumhq.selenium.selenium-manager_4.28.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.seleniumhq.selenium.selenium-json_4.28.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.kms.katalon.core.appium_1.0.0.202507110620.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.kms.katalon.api_1.0.0.202507110620.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.seleniumhq.selenium.selenium-os_4.28.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.eclipse.e4.core.contexts_1.12.600.v20240413-1529.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.eclipse.e4.core.services_2.4.400.v20240413-1529.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.eclipse.osgi.services_3.12.100.v20240327-0645.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.eclipse.equinox.common_3.19.100.v20240524-2011.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.kms.katalon.platform.core_1.0.0.202507110620.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.kms.katalon.common_1.0.0.202507110620.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.kms.katalon.session.core_1.0.0.202507110620.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.eclipse.e4.core.di_1.9.500.v20240606-1236.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.kms.katalon.execution.core_1.0.0.202507110620.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.eclipse.equinox.registry_3.12.100.v20240524-2011.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/dev.failsafe_3.3.2.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.fasterxml.jackson.datatype.jackson-datatype-jsr310_2.17.2.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.eclipse.e4.core.di.annotations_1.8.400.v20240413-1529.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.kms.katalon.core.webui_1.0.0.202507110620.jar" sourcepath="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/source/com.kms.katalon.core.webui/com.kms.katalon.core.webui-sources.jar">
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/commons-logging-1.3.4.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/spring-context-5.3.19.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/jackson-coreutils-2.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/fontbox-3.0.4.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/byte-buddy-1.14.3.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/ecj-3.21.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/aalto-xml-1.0.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/wadl.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/mitm-2.1.5.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/repackaged-sikuli-api-1.0.2-standalone.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/log4j-api-2.17.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/objenesis-3.3.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/mockito-inline-5.2.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/dnsjava-3.6.2.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/mockito-core-5.2.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/jackson-coreutils-equivalence-1.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/browsermob-core-2.1.5.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/cglib-3.2.10.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/xmlbeans-3.1.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/jna-5.12.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/log4j-1.2-api-2.17.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/json-schema-validator-2.2.14.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/poi-3.17.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/soap-common-1.0.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/log4j-core-2.17.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/jzlib-1.1.3.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/commons-validator-1.6.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/soap-legacy-1.0.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/byte-buddy-agent-1.14.3.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/jasperreports-6.20.5.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/javax.servlet-api_3.1.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/poi-ooxml-schemas-3.17.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/kat-server.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/su.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/stax2-api-4.0.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/openpdf-1.3.30.jaspersoft.2.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/commons-collections4-4.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/selenium-shutterbug-1.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/pdfbox-io-3.0.4.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/poi-ooxml-3.17.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/pdfbox-3.0.4.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/commons-codec-1.10.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/uri-template-0.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/json-schema-core-1.2.14.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/aspectjweaver-1.9.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/groovy-3.0.17.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/aws-2.20.3-fat.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/jasperreports-fonts-6.20.5.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/jna-platform-5.12.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/java-client-9.2.3.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/soap-builder-1.0.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/proxy-vole-1.1.5-jar-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/swagger-parser-1.0.67-fat.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/curvesapi-1.04.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/commons-javaflow-20060411.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/lib/littleproxy-1.1.0-beta-bmp-17.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/net.sf.supercsv.super-csv_2.4.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.apache.commons.commons-io_2.17.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.apache.commons.lang_2.6.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.google.gson_2.11.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.jsoup_1.14.3.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.apache.commons.dbutils_1.6.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.oracle.database.jdbc.ojdbc11_21.18.0.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.postgresql.jdbc_42.7.7.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.eclipse.osgi_3.22.0.v20241030-2121.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.kms.katalon.constant_1.0.0.202508191006.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.eclipse.persistence.eclipselink_2.7.11.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.kms.katalon.selenium-standalone_1.0.0.202508191006.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/atu.testrecorder.screen-recorder_2.1.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.google.guava_33.4.0.jre.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.kms.katalon.util_1.0.0.202508191006.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.apache.httpcomponents.httpclient_4.5.14.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.apache.httpcomponents.httpcore_4.4.16.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.apache.httpcomponents.httpmime_4.5.13.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.apache.commons.lang3_3.17.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.greenrobot.eventbus_3.1.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/net.bytebuddy.byte-buddy_1.15.11.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.junit_4.13.2.v20230809-1000.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.fasterxml.jackson.core.jackson-databind_2.17.2.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.fasterxml.jackson.core.jackson-core_2.17.2.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.fasterxml.jackson.core.jackson-annotations_2.17.2.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/slf4j.api_2.0.16.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.fusesource.jansi_1.17.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.kms.katalon.netlightbody_1.0.0.202508191006.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.kms.katalon.poi_1.0.0.202508191006.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.apache.commons.commons-text_1.10.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.kms.katalon.proxyvole_1.0.0.202508191006.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.microsoft.sqlserver.mssql-jdbc_12.6.4.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.github.kklisura.cdt.java-client_2.1.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/javax.websocket-api_1.1.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.glassfish.tyrus.container-grizzly-client_1.13.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.glassfish.grizzly.http-server_2.3.25.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.glassfish.grizzly.framework_2.3.25.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.glassfish.grizzly.http_2.3.25.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.glassfish.tyrus.client_1.13.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.glassfish.tyrus.core_1.13.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.glassfish.tyrus.spi_1.13.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/javassist_3.28.0.GA.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/graphql-java_22.3.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.glassfish.jaxb.runtime_2.3.6.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.glassfish.jaxb.txw2_2.3.6.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.dom4j_2.1.4.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.kms.katalon.groovy-extended_1.0.0.202508191006.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.sun.activation.javax.activation_1.2.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/jakarta.xml.bind-api_4.0.2.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.eclipse.jface_3.35.100.v20241003-1431.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.kms.katalon.logging_1.0.0.202508191006.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/json_20240303.0.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/assertj-core_3.25.3.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.networknt.json-schema-validator_1.0.66.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.kms.katalon.network.apache_1.0.0.202508191006.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.kms.katalon.network.core_1.0.0.202508191006.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/java-dataloader_3.3.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.apache.commons.collections_3.2.2.v201511171945.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.apache.commons.commons-collections4_4.4.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.apache.commons.digester_2.1.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/stax2-api_4.2.2.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.fasterxml.woodstox.woodstox-core_6.6.2.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.apache.commons.logging_1.2.0.v20180409-1502.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.kms.katalon.report.core_1.0.0.202508191006.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.apache.commons.commons-beanutils_1.9.4.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.seleniumhq.selenium.selenium-api_4.28.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.seleniumhq.selenium.selenium-remote-driver_4.28.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.seleniumhq.selenium.selenium-http_4.28.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/ch.qos.logback.classic_1.3.15.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/ch.qos.logback.core_1.3.15.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/log4j.over.slf4j_1.7.36.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.hamcrest.core_1.3.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.beanshell.bsh_2.0.0.0b4.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.apache.ant.launcher_1.9.6.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.seleniumhq.selenium.selenium-chrome-driver_4.28.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.seleniumhq.selenium.selenium-chromium-driver_4.28.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.seleniumhq.selenium.selenium-edge-driver_4.28.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.seleniumhq.selenium.selenium-firefox-driver_4.28.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.seleniumhq.selenium.selenium-safari-driver_4.28.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.seleniumhq.selenium.selenium-ie-driver_4.28.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.seleniumhq.selenium.selenium-manager_4.28.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.seleniumhq.selenium.selenium-json_4.28.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.kms.katalon.core.appium_1.0.0.202508191006.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.kms.katalon.api_1.0.0.202508191006.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.seleniumhq.selenium.selenium-os_4.28.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.eclipse.e4.core.contexts_1.13.0.v20241014-2013.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.eclipse.e4.core.services_2.5.0.v20241015-2219.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.eclipse.osgi.services_3.12.100.v20240327-0645.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.eclipse.equinox.common_3.19.200.v20241004-0654.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.kms.katalon.platform.core_1.0.0.202508191006.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.kms.katalon.common_1.0.0.202508191006.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.kms.katalon.session.core_1.0.0.202508191006.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.eclipse.e4.core.di_1.9.500.v20240606-1236.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.kms.katalon.execution.core_1.0.0.202508191006.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.eclipse.equinox.registry_3.12.200.v20241004-0654.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/dev.failsafe_3.3.2.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.fasterxml.jackson.datatype.jackson-datatype-jsr310_2.17.2.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.eclipse.e4.core.di.annotations_1.8.400.v20240413-1529.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.kms.katalon.core.webui_1.0.0.202508191006.jar" sourcepath="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/source/com.kms.katalon.core.webui/com.kms.katalon.core.webui-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="file:/Applications/Katalon%20Studio.app/Contents/Eclipse/configuration/resources/apidocs/com.kms.katalon.core.webui/"/>
+			<attribute name="javadoc_location" value="file:/Applications/Katalon%20Studio%20Enterprise.app/Contents/Eclipse/configuration/resources/apidocs/com.kms.katalon.core.webui/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.seleniumhq.selenium.selenium-support_4.28.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.beust.jcommander_1.82.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.seleniumhq.selenium.selenium-devtools-v135_4.31.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.kms.katalon.core.mobile_1.0.0.202507110620.jar" sourcepath="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/source/com.kms.katalon.core.mobile/com.kms.katalon.core.mobile-sources.jar">
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.seleniumhq.selenium.selenium-support_4.28.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.seleniumhq.selenium.selenium-devtools-v138_4.34.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.kms.katalon.core.mobile_1.0.0.202508191006.jar" sourcepath="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/source/com.kms.katalon.core.mobile/com.kms.katalon.core.mobile-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="file:/Applications/Katalon%20Studio.app/Contents/Eclipse/configuration/resources/apidocs/com.kms.katalon.core.mobile/"/>
+			<attribute name="javadoc_location" value="file:/Applications/Katalon%20Studio%20Enterprise.app/Contents/Eclipse/configuration/resources/apidocs/com.kms.katalon.core.mobile/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.apache.commons.commons-validator_1.7.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.kms.katalon.core.cucumber_1.0.0.202507110620.jar" sourcepath="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/source/com.kms.katalon.core.cucumber/com.kms.katalon.core.cucumber-sources.jar">
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.apache.commons.commons-validator_1.7.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.kms.katalon.core.cucumber_1.0.0.202508191006.jar" sourcepath="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/source/com.kms.katalon.core.cucumber/com.kms.katalon.core.cucumber-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="file:/Applications/Katalon%20Studio.app/Contents/Eclipse/configuration/resources/apidocs/com.kms.katalon.core.cucumber/"/>
+			<attribute name="javadoc_location" value="file:/Applications/Katalon%20Studio%20Enterprise.app/Contents/Eclipse/configuration/resources/apidocs/com.kms.katalon.core.cucumber/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/io.cucumber.core_3.0.3.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/io.cucumber.datatable_1.1.16.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/io.cucumber.datatable-dependencies_1.1.16.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/io.cucumber.expressions_5.0.19.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/io.cucumber.gherkin_5.0.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/io.cucumber.html_0.2.7.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/io.cucumber.java_3.0.3.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/io.cucumber.tag-expressions_1.1.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/io.cucumber.junit_3.0.3.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.kms.katalon.core.webservice_1.0.0.202507110620.jar" sourcepath="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/source/com.kms.katalon.core.webservice/com.kms.katalon.core.webservice-sources.jar">
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/io.cucumber.core_3.0.3.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/io.cucumber.datatable_1.1.16.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/io.cucumber.datatable-dependencies_1.1.16.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/io.cucumber.expressions_5.0.19.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/io.cucumber.gherkin_5.0.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/io.cucumber.html_0.2.7.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/io.cucumber.java_3.0.3.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/io.cucumber.tag-expressions_1.1.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/io.cucumber.junit_3.0.3.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.kms.katalon.core.webservice_1.0.0.202508191006.jar" sourcepath="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/source/com.kms.katalon.core.webservice/com.kms.katalon.core.webservice-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="file:/Applications/Katalon%20Studio.app/Contents/Eclipse/configuration/resources/apidocs/com.kms.katalon.core.webservice/"/>
+			<attribute name="javadoc_location" value="file:/Applications/Katalon%20Studio%20Enterprise.app/Contents/Eclipse/configuration/resources/apidocs/com.kms.katalon.core.webservice/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/wsdl4j_1.6.2.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.google.oauth-client.google-oauth-client_1.22.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.google.http-client.google-http-client_1.22.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.kms.katalon.preferences_1.0.0.202507110620.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.apache.xmlbeans_3.1.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.kms.katalon.entity_1.0.0.202507110620.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/jakarta.xml.ws-api_2.3.3.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/javax.xml.soap-api_1.4.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.atlassian.oai.swagger-request-validator-core_2.38.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/io.swagger.compat-spec-parser_1.0.67.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/io.swagger.core.v3.swagger-annotations_2.2.14.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/io.swagger.core.v3.swagger-core_2.2.14.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/io.swagger.core.v3.swagger-models_2.2.14.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/io.swagger.parser.v3.swagger-parser-core_2.1.16.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/io.swagger.parser.v3.swagger-parser-v2-converter_2.1.16.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.github.java-json-tools.btf_1.3.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.fasterxml.jackson.dataformat.jackson-dataformat-yaml_2.17.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.yaml.snakeyaml_2.2.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.github.java-json-tools.msg-simple_1.2.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/jackson-core-asl_1.9.13.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/joda-time_2.10.5.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/javax.mail-api_1.6.2.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.googlecode.libphonenumber_8.11.1.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.google.guava.failureaccess_1.0.2.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/io.swagger.parser.v3.swagger-parser_2.1.16.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/io.swagger.parser.v3.swagger-parser-v3_2.1.16.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/io.swagger.parser_1.0.67.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.narupley.not-going-to-be-commons-ssl_0.3.20.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.kms.katalon.core.windows_1.0.0.202507110620.jar" sourcepath="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/source/com.kms.katalon.core.windows/com.kms.katalon.core.windows-sources.jar">
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/wsdl4j_1.6.2.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.google.oauth-client.google-oauth-client_1.22.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.google.http-client.google-http-client_1.22.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.kms.katalon.preferences_1.0.0.202508191006.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.apache.xmlbeans_3.1.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.kms.katalon.entity_1.0.0.202508191006.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/jakarta.xml.ws-api_2.3.3.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/javax.xml.soap-api_1.4.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.atlassian.oai.swagger-request-validator-core_2.38.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/io.swagger.compat-spec-parser_1.0.67.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/io.swagger.core.v3.swagger-annotations_2.2.14.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/io.swagger.core.v3.swagger-core_2.2.14.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/io.swagger.core.v3.swagger-models_2.2.14.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/io.swagger.parser.v3.swagger-parser-core_2.1.16.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/io.swagger.parser.v3.swagger-parser-v2-converter_2.1.16.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.github.java-json-tools.btf_1.3.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.fasterxml.jackson.dataformat.jackson-dataformat-yaml_2.17.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.yaml.snakeyaml_2.2.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.github.java-json-tools.msg-simple_1.2.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/jackson-core-asl_1.9.13.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/joda-time_2.10.5.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/javax.mail-api_1.6.2.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.googlecode.libphonenumber_8.11.1.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.google.guava.failureaccess_1.0.2.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/io.swagger.parser.v3.swagger-parser_2.1.16.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/io.swagger.parser.v3.swagger-parser-v3_2.1.16.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/io.swagger.parser_1.0.67.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.narupley.not-going-to-be-commons-ssl_0.3.20.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.kms.katalon.core.windows_1.0.0.202508191006.jar" sourcepath="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/source/com.kms.katalon.core.windows/com.kms.katalon.core.windows-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="file:/Applications/Katalon%20Studio.app/Contents/Eclipse/configuration/resources/apidocs/com.kms.katalon.core.windows/"/>
+			<attribute name="javadoc_location" value="file:/Applications/Katalon%20Studio%20Enterprise.app/Contents/Eclipse/configuration/resources/apidocs/com.kms.katalon.core.windows/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.sun.jna.platform_5.14.0.jar"/>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/com.kms.katalon.core.testng_1.0.0.202507110620.jar" sourcepath="/Applications/Katalon Studio.app/Contents/Eclipse/configuration/resources/source/com.kms.katalon.core.testng/com.kms.katalon.core.testng-sources.jar">
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.sun.jna.platform_5.15.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/net.lingala.zip4j_2.11.5.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.kms.katalon.core.testng_1.0.0.202508191006.jar" sourcepath="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/configuration/resources/source/com.kms.katalon.core.testng/com.kms.katalon.core.testng-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="file:/Applications/Katalon%20Studio.app/Contents/Eclipse/configuration/resources/apidocs/com.kms.katalon.core.testng/"/>
+			<attribute name="javadoc_location" value="file:/Applications/Katalon%20Studio%20Enterprise.app/Contents/Eclipse/configuration/resources/apidocs/com.kms.katalon.core.testng/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Applications/Katalon Studio.app/Contents/Eclipse/plugins/org.testng_7.8.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/org.testng_7.8.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/Katalon Studio Enterprise.app/Contents/Eclipse/plugins/com.beust.jcommander_1.82.0.jar"/>
 	<classpathentry kind="con" path="GROOVY_SUPPORT"/>
+	<classpathentry kind="con" path="GROOVY_DSL_SUPPORT"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
