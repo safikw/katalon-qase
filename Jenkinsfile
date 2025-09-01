@@ -28,9 +28,7 @@ pipeline {
             }
         }
 
-    }
-
-    stages {
+stages {
         stage('Run Katalon Tests') {
             steps {
                 sh '''
@@ -96,3 +94,4 @@ pipeline {
             echo "Build failed!"
         }
     }
+}
