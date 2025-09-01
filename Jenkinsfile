@@ -25,18 +25,6 @@ pipeline {
             }
         }
 
-        stage('Connect to STF Device') {
-            steps {
-                sh '''
-                echo "Connecting to STF device..."
-                adb kill-server
-                adb start-server
-                adb connect $STF_DEVICE
-                adb connect $STF_DEVICE
-                adb devices
-                '''
-            }}
-
 
 stage('Run Katalon Tests') {
     steps {
