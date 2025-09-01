@@ -50,12 +50,12 @@ jobs:
       - name: Run Katalon Android Tests
         run: |
           ./katalon/katalonc \
-            -projectPath="$(pwd)/Android Mobile Tests with Katalon Studio.prj" \
-            -retry=0 \
-            -testSuitePath="Test Suites/Smoke Tests for Mobile Testing" \
-            -executionProfile="default" \
-            -browserType="Mobile" \
-            -reportFolder=Reports
+          -projectPath="$(pwd)/Android Mobile Tests with Katalon Studio.prj" \
+          -retry=0 \
+          -testSuitePath="Test Suites/Smoke Tests for Mobile Testing" \
+          -executionProfile="default" \
+          -browserType="Mobile" \
+          -reportFolder=Reports
 
       - name: Publish to Qase using Qase CLI
         if: always()
