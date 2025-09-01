@@ -1,5 +1,5 @@
 pipeline {
-    agent none
+    agent any
 
     environment {
         QASE_PROJECT_CODE = "MKQ"
@@ -9,7 +9,6 @@ pipeline {
 
     stages {  
         stage('Create Qase Run') {
-            agent any
             steps {
                 sh '''
                 echo "Creating new Qase run..."
@@ -26,17 +25,14 @@ pipeline {
         }
 
         stage('Run Katalon Tests') {
-            agent {
-                docker {
-                    image 'jenkins-with-tools'
-                    user 'root'
-                }
-            }
             steps {
                 sh '''
                 KATALON_HOME="/opt/Katalon_Studio_Engine_Linux_arm64-10.2.4"
+
                 echo "Running Katalon Tests with Katalon Runtime Engine from $KATALON_HOME"
+
                 chmod +x "$KATALON_HOME/katalonc"
+
                 "$KATALON_HOME/katalonc" \\
                     -projectPath="$(pwd)/Android Mobile Tests with Katalon Studio.prj" \\
                     -testSuitePath="Test Suites/Smoke Tests for Mobile Testing" \\
@@ -50,17 +46,16 @@ pipeline {
         }
 
         stage('Send Results to Qase') {
-            agent any
             steps {
                 sh '''
                 runId=$(cat qase_run_id.txt)
                 echo "Sending results to Qase run $runId ..."
+                # Bisa pakai Katalon listener atau curl upload report
                 '''
             }
         }
 
         stage('Archive Reports') {
-            agent any
             steps {
                 archiveArtifacts artifacts: 'qase_run*.txt', followSymlinks: false
                 junit '**/Reports/**/JUnit_Report.xml'
