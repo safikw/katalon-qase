@@ -25,11 +25,9 @@ pipeline {
                       -d "{
                             \\"title\\": \\"Jenkins Run #$BUILD_NUMBER\\"
                           }")
-
                     echo "$response" > qase_run.json
                     runId=$(jq -r '.result.id' qase_run.json)
                     echo "Created Qase Run ID = $runId"
-
                     echo $runId > qase_run_id.txt
                     '''
                 }
@@ -57,19 +55,29 @@ pipeline {
                     sh '''
                     runId=$(cat qase_run_id.txt)
                     echo "📡 Sending results to Qase run $runId ..."
-                    # Upload report ke Qase via reporter/listener
+                    # Bisa pakai Katalon listener atau curl upload report
                     '''
                 }
+            }
+        }
+
+        stage('Archive Reports') {
+            steps {
+                archiveArtifacts artifacts: 'qase_run*.txt', followSymlinks: false
+                junit '**/Reports/**/JUnit_Report.xml'
             }
         }
     }
 
     post {
         always {
-            node { 
-                archiveArtifacts artifacts: 'qase_run*.txt', followSymlinks: false
-                junit '**/Reports/**/JUnit_Report.xml'
-            }
+            echo "Build finished: ${currentBuild.currentResult}"
+        }
+        success {
+            echo "Build successful!"
+        }
+        failure {
+            echo "❌ Build failed!"
         }
     }
 }
