@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/org/repo.git'
+                git branch: 'main', url: 'https://github.com/safikw/katalon-qase.git'
             }
         }
 
@@ -54,7 +54,7 @@ pipeline {
                 script {
                     sh '''
                     runId=$(cat qase_run_id.txt)
-                    echo "📡 Sending results to Qase run $runId ..."
+                    echo "Sending results to Qase run $runId ..."
                     # Bisa pakai Katalon listener atau curl upload report
                     '''
                 }
@@ -77,7 +77,7 @@ pipeline {
             echo "Build successful!"
         }
         failure {
-            echo "❌ Build failed!"
+            echo "Build failed!"
         }
     }
 }
