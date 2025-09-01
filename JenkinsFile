@@ -38,10 +38,10 @@ pipeline {
             steps {
                 sh '''
                 ./katalonc.sh -projectPath="/katalon/project" \
-                  -testSuitePath="Test Suites/MySuite" \
-                  -executionProfile="default" \
-                  -browserType="Chrome" \
-                  -apiKey=$KATALON_API_KEY
+                -testSuitePath="Test Suites/Smoke Tests for Mobile Testing" \
+                -executionProfile="default" \
+                -deviceId="emulator-5554" \
+                -executionPlatform="Android"
                 '''
             }
         }
