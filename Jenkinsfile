@@ -36,6 +36,7 @@ pipeline {
         stage('Run Katalon Tests') {
             steps {
                 sh '''
+                adb start-server
                   KATALON_HOME="/opt/Katalon_Studio_Engine_Linux_arm64-10.2.4"
                   DEVICE_ID=$(adb devices | grep -w "device" | grep -v "List" | awk '{print $1}' | head -n1)
                   echo "Using device: $DEVICE_ID"
