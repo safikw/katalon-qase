@@ -31,8 +31,8 @@ pipeline {
         adb start-server
         adb devices
         echo "Connecting to STF device..."
-        adb connect 127.0.0.1:7405
-        adb connect 127.0.0.1:7405
+        adb connect 172.20.10.8:7401
+        adb connect 172.20.10.8:7401
         adb devices
         '''
     }
@@ -49,7 +49,7 @@ stage('Run Katalon Tests') {
     -executionProfile="default" \
     -executionPlatform="Android" \
     -browserType="Android" \
-    -deviceId="127.0.0.1:7405" \\
+    -deviceId="172.20.10.8:7401" \\
     -reportFolder=Reports \
     -apiKey="$KATALON_API_KEY"
 
