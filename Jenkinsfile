@@ -27,7 +27,10 @@ pipeline {
         stage('Connect to STF Device') {
     steps {
         sh '''
+        adb kill-server
+        adb start-server
         echo "Connecting to STF device..."
+        adb connect 127.0.0.1:7401
         adb connect 127.0.0.1:7401
         adb devices
         '''
