@@ -7,7 +7,7 @@ pipeline {
         KATALON_API_KEY   = credentials('KATALON_API_KEY')
     }
 
-    stages {  
+    stages {
         stage('Create Qase Run') {
             steps {
                 script {
@@ -28,7 +28,6 @@ pipeline {
             }
         }
 
-stages {
         stage('Run Katalon Tests') {
             steps {
                 sh '''
@@ -61,7 +60,6 @@ stages {
                 '''
             }
         }
-    }
 
         stage('Send Results to Qase') {
             steps {
