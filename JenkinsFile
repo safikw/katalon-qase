@@ -8,11 +8,6 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/safikw/katalon-qase.git'
-            }
-        }
 
         stage('Create Qase Run') {
             steps {
