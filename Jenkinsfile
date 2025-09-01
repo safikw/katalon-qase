@@ -5,7 +5,7 @@ pipeline {
         QASE_PROJECT_CODE = "MKQ"
         QASE_API_TOKEN    = credentials('QASE_API_TOKEN')
         KATALON_API_KEY   = credentials('KATALON_API_KEY')
-        STF_DEVICE        = "172.20.10.8:7401"
+        STF_DEVICE        = "stf:7401"
     }
 
     stages {  
