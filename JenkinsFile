@@ -31,27 +31,18 @@ pipeline {
 stage('Run Katalon Tests') {
     steps {
         sh '''
-        # Use the absolute path to the Katalon Runtime Engine for macOS.
-        # This assumes you have the macOS version of Katalon installed at this path.
-        KATALON_HOME="/Applications/Katalon Studio.app/Contents/MacOS"
-
-        # Check if the file is executable.
-        if [ ! -x "$KATALON_HOME/katalon" ]; then
-            echo "Katalon executable not found or is not executable."
-            exit 1
-        fi
-
-        # Run the tests using the correct macOS executable.
-        "$KATALON_HOME/katalon" \\
-            -projectPath="$(pwd)/Android Mobile Tests with Katalon Studio.prj" \\
-            -testSuitePath="Test Suites/Smoke Tests for Mobile Testing" \\
-            -executionProfile="default" \\
-            -executionPlatform="Android" \\
-            -browserType="Mobile" \\
-            -reportFolder="Reports"
+        docker run --rm --platform linux/amd64 \
+            -v "$(pwd)":/workspace \
+            katalonstudio/katalon:9.0.0 \
+            -projectPath="/workspace/Android Mobile Tests with Katalon Studio.prj" \
+            -testSuitePath="Test Suites/Smoke Tests for Mobile Testing" \
+            -executionProfile="default" \
+            -executionPlatform="Android" \
+            -browserType="Mobile"
         '''
     }
 }
+
 
         stage('Send Results to Qase') {
             steps {
