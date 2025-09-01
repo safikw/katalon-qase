@@ -30,17 +30,25 @@ pipeline {
 
         stage('Run Katalon Tests') {
             steps {
-                script {
-                    sh '''
-                    chmod +x ./katalon/project/katalonc.sh
-                    ./katalon/project/katalonc.sh -projectPath=./katalon/project \
-                    -testSuitePath="Test Suites/Smoke Tests for Mobile Testing" \
-                    -executionProfile="default" \
-                    -deviceId="emulator-5554" \
-                    -executionPlatform="Android" \
-                    -apiKey=$KATALON_API_KEY
-                    '''
-                }
+                // Assuming Katalon is already installed at /opt/Katalon_Studio_Engine_*/
+                // Jika tidak, tambahkan langkah untuk mengunduh dan mengekstraknya terlebih dahulu
+                sh '''
+                KATALON_HOME="/opt/Katalon_Studio_Engine_9.0.0"
+
+                echo "Running Katalon Tests with Katalon Runtime Engine from $KATALON_HOME"
+
+                # Memberikan izin eksekusi pada katalonc
+                chmod +x "$KATALON_HOME/katalonc"
+
+                # Menjalankan tes dengan path absolut ke katalonc
+                "$KATALON_HOME/katalonc" \\
+                    -projectPath="$(pwd)" \\
+                    -testSuitePath="Test Suites/Smoke Tests for Mobile Testing" \\
+                    -executionProfile="default" \\
+                    -executionPlatform="Android" \\
+                    -apiKey="$KATALON_API_KEY" \\
+                    -browserType="Mobile"
+                '''
             }
         }
 
