@@ -24,6 +24,20 @@ pipeline {
             }
         }
 
+    stage('Start Emulator') {
+    steps {
+        sh '''
+        # Start emulator in background
+        nohup emulator -avd Pixel_6_API_33 -no-window -no-audio -wipe-data &
+        
+        # Wait until device is online
+        adb wait-for-device
+        adb devices
+        '''
+    }
+}
+
+
 stage('Run Katalon Tests') {
     steps {
         sh '''
