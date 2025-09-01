@@ -32,7 +32,7 @@ stage('Run Katalon Tests') {
     steps {
         script {
             sh '''
-            KATALON_HOME="/opt/Katalon_Studio_Engine_Linux_64-9.0.0"
+            KATALON_HOME="/opt/Katalon_Studio_Engine_Linux_arm64-10.2.4"
 
             # Ensure katalonc is executable
             chmod +x "$KATALON_HOME/katalonc"
