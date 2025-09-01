@@ -28,7 +28,7 @@ pipeline {
     steps {
         sh '''
         echo "Connecting to STF device..."
-        adb connect adb connect 127.0.0.1:7401
+        adb connect 127.0.0.1:7401
         adb devices
         '''
     }
