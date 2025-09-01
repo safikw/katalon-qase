@@ -8,6 +8,7 @@ pipeline {
         STF_DEVICE        = "stf:7401"
     }
 
+stages {  
     stage('Check Devices') {
     steps {
         sh '''
@@ -17,7 +18,7 @@ pipeline {
     }
 
 
-    stages {  
+    
         stage('Create Qase Run') {
             steps {
                 sh '''
