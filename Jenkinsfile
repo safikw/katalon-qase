@@ -27,14 +27,16 @@ pipeline {
 stage('Run Katalon Tests') {
     steps {
         sh '''
-        KATALON_HOME="/opt/Katalon_Studio_Engine_Linux_arm64-10.2.4" "$KATALON_HOME/katalonc" \
-  -projectPath="$(pwd)/Android Mobile Tests with Katalon Studio.prj" \
-  -testSuitePath="\"Test Suites/Smoke Tests for Mobile Testing\"" \
-  -executionProfile="default" \
-  -executionPlatform="Android" \
-  -browserType="Mobile" \
-  -reportFolder=Reports \
-  -apiKey="$KATALON_API_KEY"
+        KATALON_HOME="/opt/Katalon_Studio_Engine_Linux_arm64-10.2.4"
+"$KATALON_HOME/katalonc" \
+    -projectPath="$(pwd)/Android Mobile Tests with Katalon Studio.prj" \
+     -testSuitePath="\"Test Suites/Smoke Tests for Mobile Testing\"" \
+    -executionProfile="default" \
+    -executionPlatform="Android" \
+    -browserType="Mobile" \
+    -reportFolder=Reports \
+    -apiKey="$KATALON_API_KEY"
+
         '''
     }
 }
