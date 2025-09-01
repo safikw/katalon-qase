@@ -36,7 +36,7 @@ stage('Run Katalon Tests') {
     -executionProfile="default" \
     -executionPlatform="Android" \
     -browserType="Android" \
-    -deviceId="127.0.0.1:7401" \\
+    -deviceId="stf:7401" \\
     -reportFolder=Reports \
     -apiKey="$KATALON_API_KEY"
 
