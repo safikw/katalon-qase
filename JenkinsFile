@@ -39,7 +39,6 @@ stage('Run Katalon Tests') {
     -deviceId="stf:7401" \\
     -reportFolder=Reports \
     -apiKey="$KATALON_API_KEY"
-    -logLevel="DEBUG"
         '''
     }
 }
