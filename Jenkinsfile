@@ -28,14 +28,15 @@ stage('Run Katalon Tests') {
     steps {
         sh '''
         KATALON_HOME="/opt/Katalon_Studio_Engine_Linux_arm64-10.2.4"
-        
-        # Add this command to list the files in your test suites directory
-        echo "Verifying test suite file path..."
-        ls -l "Test Suites/"
-        
-        # Now, run the Katalon command with the confirmed, correct path
+        PROJECT_PATH="/var/jenkins_home/workspace/katalon-qase-pipeline/Android Mobile Tests with Katalon Studio.prj"
+
+        # Change to a different directory to run the command
+        # This prevents the "run outside of the project folder" warning
+        cd /tmp/
+
+        echo "Running Katalon Tests from a non-project directory..."
         "$KATALON_HOME/katalonc" \\
-            -projectPath="$(pwd)/Android Mobile Tests with Katalon Studio.prj" \\
+            -projectPath="$PROJECT_PATH" \\
             -testSuitePath="Test Suites/Smoke Tests for Mobile Testing.ts" \\
             -executionProfile="default" \\
             -executionPlatform="Android" \\
