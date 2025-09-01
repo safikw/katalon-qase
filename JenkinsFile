@@ -37,7 +37,7 @@ stage('Run Katalon Tests') {
         echo "Running Katalon Tests from a non-project directory..."
         "$KATALON_HOME/katalonc" \\
             -projectPath="/tmp/katalon-project/Android Mobile Tests with Katalon Studio.prj" \\
-            -testSuitePath="Test Suites/Smoke Tests for Mobile Testing" \\
+            -testSuiteCollectionPath="Test Suites/Smoke Tests for Mobile Testing" \\
             -executionProfile="default" \\
             -executionPlatform="Android" \\
             -browserType="Mobile" \\
