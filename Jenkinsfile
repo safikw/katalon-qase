@@ -33,7 +33,7 @@ stage('Run Katalon Tests') {
      -testSuiteCollectionPath="Test Suites/Smoke Tests for Mobile Testing" \
     -executionProfile="default" \
     -executionPlatform="Android" \
-    -browserType="Mobile" \
+    -browserType="Chrome" \
     -reportFolder=Reports \
     -apiKey="$KATALON_API_KEY"
 
