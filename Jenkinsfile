@@ -32,7 +32,8 @@ pipeline {
             steps {
                 script {
                     sh '''
-                    /katalon/project/katalonc.sh -projectPath=/katalon/project \
+                    chmod +x ./katalon/project/katalonc.sh
+                    ./katalon/project/katalonc.sh -projectPath=./katalon/project \
                     -testSuitePath="Test Suites/Smoke Tests for Mobile Testing" \
                     -executionProfile="default" \
                     -deviceId="emulator-5554" \
