@@ -28,7 +28,6 @@ pipeline {
             }
         }
 
-stages {
     stage('Run Katalon Tests') {
         steps {
             sh '''
@@ -50,7 +49,6 @@ stages {
             '''
         }
     }
-}
 
 
         stage('Send Results to Qase') {
