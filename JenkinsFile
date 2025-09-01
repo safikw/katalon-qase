@@ -1,5 +1,5 @@
 pipeline {
-    agent none 
+    agent none
 
     environment {
         QASE_PROJECT_CODE = "MKQ"
@@ -11,19 +11,17 @@ pipeline {
         stage('Create Qase Run') {
             agent any
             steps {
-                script {
-                    sh '''
-                    echo "Creating new Qase run..."
-                    response=$(curl -s -X POST "https://api.qase.io/v1/run/$QASE_PROJECT_CODE" \\
-                      -H "Token: $QASE_API_TOKEN" \\
-                      -H "Content-Type: application/json" \\
-                      -d "{ \\"title\\": \\"Jenkins Run #$BUILD_NUMBER\\" }")
-                    echo "$response" > qase_run.json
-                    runId=$(jq -r '.result.id' qase_run.json)
-                    echo "Created Qase Run ID = $runId"
-                    echo $runId > qase_run_id.txt
-                    '''
-                }
+                sh '''
+                echo "Creating new Qase run..."
+                response=$(curl -s -X POST "https://api.qase.io/v1/run/$QASE_PROJECT_CODE" \\
+                  -H "Token: $QASE_API_TOKEN" \\
+                  -H "Content-Type: application/json" \\
+                  -d "{ \\"title\\": \\"Jenkins Run #$BUILD_NUMBER\\" }")
+                echo "$response" > qase_run.json
+                runId=$(jq -r '.result.id' qase_run.json)
+                echo "Created Qase Run ID = $runId"
+                echo $runId > qase_run_id.txt
+                '''
             }
         }
 
@@ -37,11 +35,8 @@ pipeline {
             steps {
                 sh '''
                 KATALON_HOME="/opt/Katalon_Studio_Engine_Linux_arm64-10.2.4"
-
                 echo "Running Katalon Tests with Katalon Runtime Engine from $KATALON_HOME"
-                
                 chmod +x "$KATALON_HOME/katalonc"
-
                 "$KATALON_HOME/katalonc" \\
                     -projectPath="$(pwd)/Android Mobile Tests with Katalon Studio.prj" \\
                     -testSuitePath="Test Suites/Smoke Tests for Mobile Testing" \\
@@ -57,13 +52,10 @@ pipeline {
         stage('Send Results to Qase') {
             agent any
             steps {
-                script {
-                    sh '''
-                    runId=$(cat qase_run_id.txt)
-                    echo "Sending results to Qase run $runId ..."
-                    # Bisa pakai Katalon listener atau curl upload report
-                    '''
-                }
+                sh '''
+                runId=$(cat qase_run_id.txt)
+                echo "Sending results to Qase run $runId ..."
+                '''
             }
         }
 
