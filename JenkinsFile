@@ -30,19 +30,21 @@ pipeline {
 
         stage('Run Katalon Tests') {
             steps {
-                // Assuming Katalon is already installed at /opt/Katalon_Studio_Engine_*/
-                // Jika tidak, tambahkan langkah untuk mengunduh dan mengekstraknya terlebih dahulu
                 sh '''
-                KATALON_HOME="/opt/Katalon_Studio_Engine_9.0.0"
+                # Use the exact, correct path to the Katalon Runtime Engine folder.
+                # This path matches what you found in the container at /opt/.
+                KATALON_HOME="/opt/Katalon_Studio_Engine_Linux_64-9.0.0"
 
                 echo "Running Katalon Tests with Katalon Runtime Engine from $KATALON_HOME"
 
-                # Memberikan izin eksekusi pada katalonc
+                # Give execution permissions to the Katalon executable.
+                # This is a good practice to ensure it's runnable.
                 chmod +x "$KATALON_HOME/katalonc"
 
-                # Menjalankan tes dengan path absolut ke katalonc
+                # Run the tests using the corrected path and project details.
+                # The $(pwd) variable points to the Jenkins workspace where your Git project is cloned.
                 "$KATALON_HOME/katalonc" \\
-                    -projectPath="$(pwd)" \\
+                    -projectPath="$(pwd)/Android Mobile Tests with Katalon Studio.prj" \\
                     -testSuitePath="Test Suites/Smoke Tests for Mobile Testing" \\
                     -executionProfile="default" \\
                     -executionPlatform="Android" \\
