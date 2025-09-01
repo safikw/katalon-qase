@@ -24,14 +24,11 @@ pipeline {
             }
         }
 
-    stage('Start Emulator') {
+        stage('Connect to STF Device') {
     steps {
         sh '''
-        # Start emulator in background
-        nohup emulator -avd Pixel_6_API_33 -no-window -no-audio -wipe-data &
-        
-        # Wait until device is online
-        adb wait-for-device
+        echo "Connecting to STF device..."
+        adb connect adb connect 127.0.0.1:7401
         adb devices
         '''
     }
@@ -48,7 +45,7 @@ stage('Run Katalon Tests') {
     -executionProfile="default" \
     -executionPlatform="Android" \
     -browserType="Android" \
-    -deviceId="emulator-5554" \\
+    -deviceId="127.0.0.1:7401" \\
     -reportFolder=Reports \
     -apiKey="$KATALON_API_KEY"
 
