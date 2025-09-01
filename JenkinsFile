@@ -5,6 +5,7 @@ pipeline {
         QASE_PROJECT_CODE = "MKQ"
         QASE_API_TOKEN    = credentials('QASE_API_TOKEN')
         KATALON_API_KEY   = credentials('KATALON_API_KEY')
+        STF_DEVICE        = "172.20.10.8:7401"
     }
 
     stages {  
@@ -25,18 +26,16 @@ pipeline {
         }
 
         stage('Connect to STF Device') {
-    steps {
-        sh '''
-        adb kill-server
-        adb start-server
-        adb devices
-        echo "Connecting to STF device..."
-        adb connect 172.20.10.8:7401
-        adb connect 172.20.10.8:7401
-        adb devices
-        '''
-    }
-}
+            steps {
+                sh '''
+                echo "Connecting to STF device..."
+                adb kill-server
+                adb start-server
+                adb connect $STF_DEVICE
+                adb connect $STF_DEVICE
+                adb devices
+                '''
+            }}
 
 
 stage('Run Katalon Tests') {
