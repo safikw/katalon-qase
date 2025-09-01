@@ -7,14 +7,7 @@ pipeline {
         KATALON_API_KEY   = credentials('KATALON_API_KEY')
     }
 
-    stages {
-        stage('Install jq') {
-            steps {
-                sh 'apt-get update && apt-get install -y jq'
-            }
-        }   
-
-
+    stages {  
         stage('Create Qase Run') {
             steps {
                 script {
