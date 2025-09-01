@@ -7,7 +7,7 @@ pipeline {
         KATALON_API_KEY   = credentials('KATALON_API_KEY')
     }
 
-    stages {
+    stages {  
         stage('Create Qase Run') {
             steps {
                 script {
@@ -30,16 +30,23 @@ pipeline {
 
 stage('Run Katalon Tests') {
     steps {
-        sh '''
-        docker run --rm --platform linux/amd64 \
-            -v "$(pwd)":/workspace \
-            katalonstudio/katalon:9.0.0 \
-            -projectPath="/workspace/Android Mobile Tests with Katalon Studio.prj" \
-            -testSuitePath="Test Suites/Smoke Tests for Mobile Testing" \
-            -executionProfile="default" \
-            -executionPlatform="Android" \
-            -browserType="Mobile"
-        '''
+        script {
+            sh '''
+            KATALON_HOME="/opt/Katalon_Studio_Engine_Linux_64-9.0.0"
+
+            # Ensure katalonc is executable
+            chmod +x "$KATALON_HOME/katalonc"
+
+            # Run Katalon Engine
+            "$KATALON_HOME/katalonc" \
+                -projectPath="$(pwd)/katalon/project" \
+                -testSuitePath="Test Suites/Smoke Tests for Mobile Testing" \
+                -executionProfile="default" \
+                -deviceId="emulator-5554" \
+                -executionPlatform="Android" \
+                -apiKey="$KATALON_API_KEY"
+            '''
+        }
     }
 }
 
