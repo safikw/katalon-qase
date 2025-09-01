@@ -8,6 +8,15 @@ pipeline {
         STF_DEVICE        = "stf:7401"
     }
 
+    stage('Check Devices') {
+    steps {
+        sh '''
+          adb devices
+        '''
+    }
+    }
+
+
     stages {  
         stage('Create Qase Run') {
             steps {
