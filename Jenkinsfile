@@ -28,6 +28,8 @@ pipeline {
             }
         }
 
+    }
+
     stages {
         stage('Run Katalon Tests') {
             steps {
@@ -94,4 +96,3 @@ pipeline {
             echo "Build failed!"
         }
     }
-}
