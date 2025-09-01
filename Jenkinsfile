@@ -32,7 +32,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                    ./katalonc.sh -projectPath="/katalon/project" \
+                    /katalon/project/katalonc.sh -projectPath=/katalon/project \
                     -testSuitePath="Test Suites/Smoke Tests for Mobile Testing" \
                     -executionProfile="default" \
                     -deviceId="emulator-5554" \
