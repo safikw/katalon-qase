@@ -8,6 +8,12 @@ pipeline {
     }
 
     stages {
+        stage('Install jq') {
+            steps {
+                sh 'apt-get update && apt-get install -y jq'
+            }
+        }   
+
 
         stage('Create Qase Run') {
             steps {
