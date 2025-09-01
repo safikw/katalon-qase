@@ -28,38 +28,30 @@ pipeline {
             }
         }
 
-        stage('Run Katalon Tests') {
-            steps {
-                sh '''
-                KATALON_HOME="/opt/Katalon_Studio_Engine_Linux_64-9.0.0"
+stage('Run Katalon Tests') {
+    steps {
+        sh '''
+        # Use the absolute path to the Katalon Runtime Engine for macOS.
+        # This assumes you have the macOS version of Katalon installed at this path.
+        KATALON_HOME="/Applications/Katalon Studio.app/Contents/MacOS"
 
-                # Check if the file is already executable.
-                if [ ! -x "$KATALON_HOME/katalonc" ]; then
-                    echo "File is not executable, attempting to change permissions."
+        # Check if the file is executable.
+        if [ ! -x "$KATALON_HOME/katalon" ]; then
+            echo "Katalon executable not found or is not executable."
+            exit 1
+        fi
 
-                    # Option 1: Try to change ownership to the Jenkins user.
-                    # This is the more secure approach.
-                    if [ -w "$KATALON_HOME" ]; then
-                        sudo chown -R jenkins "$KATALON_HOME"
-                        sudo chmod +x "$KATALON_HOME/katalonc"
-                    else
-                        # Option 2: Use sudo to grant execution permissions directly.
-                        # This should work if chown fails.
-                        echo "Changing permissions with sudo..."
-                        sudo chmod +x "$KATALON_HOME/katalonc"
-                    fi
-                fi
-
-                # Run the tests.
-                "$KATALON_HOME/katalonc" \\
-                    -projectPath="$(pwd)/Android Mobile Tests with Katalon Studio.prj" \\
-                    -testSuitePath="Test Suites/Smoke Tests for Mobile Testing" \\
-                    -executionProfile="default" \\
-                    -executionPlatform="Android" \\
-                    -browserType="Mobile"
-                '''
-            }
-        }
+        # Run the tests using the correct macOS executable.
+        "$KATALON_HOME/katalon" \\
+            -projectPath="$(pwd)/Android Mobile Tests with Katalon Studio.prj" \\
+            -testSuitePath="Test Suites/Smoke Tests for Mobile Testing" \\
+            -executionProfile="default" \\
+            -executionPlatform="Android" \\
+            -browserType="Mobile" \\
+            -reportFolder="Reports"
+        '''
+    }
+}
 
         stage('Send Results to Qase') {
             steps {
