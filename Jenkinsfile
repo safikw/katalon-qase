@@ -28,19 +28,20 @@ stage('Run Katalon Tests') {
     steps {
         sh '''
         KATALON_HOME="/opt/Katalon_Studio_Engine_Linux_arm64-10.2.4"
-        PROJECT_PATH="/var/jenkins_home/workspace/katalon-qase-pipeline/Android Mobile Tests with Katalon Studio.prj"
-        TEST_SUITE_PATH="/var/jenkins_home/workspace/katalon-qase-pipeline/Test Suites/Smoke Tests for Mobile Testing.ts"
+        PROJECT_DIR="/var/jenkins_home/workspace/katalon-qase-pipeline"
         
-        cd /tmp/
-
+        # Create a symbolic link to the project folder to avoid issues with spaces
+        ln -s "$PROJECT_DIR" /tmp/katalon-project
+        
+        # Use the symbolic link in the Katalon command
         echo "Running Katalon Tests from a non-project directory..."
         "$KATALON_HOME/katalonc" \\
-            -projectPath="$PROJECT_PATH" \\
-            -testSuitePath="$TEST_SUITE_PATH" \\
+            -projectPath="/tmp/katalon-project/Android Mobile Tests with Katalon Studio.prj" \\
+            -testSuitePath="/tmp/katalon-project/Test Suites/Smoke Tests for Mobile Testing.ts" \\
             -executionProfile="default" \\
             -executionPlatform="Android" \\
             -browserType="Mobile" \\
-            -reportFolder=Reports \\
+            -reportFolder="Reports" \\
             -apiKey="$KATALON_API_KEY"
         '''
     }
