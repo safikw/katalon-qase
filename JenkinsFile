@@ -8,61 +8,57 @@ pipeline {
         STF_DEVICE        = "stf:7401"
     }
 
-stages {  
-    stage('Check Devices') {
-    steps {
-        sh '''
-          adb devices
-        '''
-    }
-    }
-
-
-    
-        stage('Create Qase Run') {
+    stages {  
+        stage('Check Devices') {
             steps {
                 sh '''
-                echo "Creating new Qase run..."
-                response=$(curl -s -X POST "https://api.qase.io/v1/run/$QASE_PROJECT_CODE" \\
-                  -H "Token: $QASE_API_TOKEN" \\
-                  -H "Content-Type: application/json" \\
-                  -d "{ \\"title\\": \\"Jenkins Run #$BUILD_NUMBER\\" }")
-                echo "$response" > qase_run.json
-                runId=$(jq -r '.result.id' qase_run.json)
-                echo "Created Qase Run ID = $runId"
-                echo $runId > qase_run_id.txt
+                  adb devices
                 '''
             }
         }
 
+        stage('Create Qase Run') {
+            steps {
+                sh '''
+                  echo "Creating new Qase run..."
+                  response=$(curl -s -X POST "https://api.qase.io/v1/run/$QASE_PROJECT_CODE" \\
+                    -H "Token: $QASE_API_TOKEN" \\
+                    -H "Content-Type: application/json" \\
+                    -d "{ \\"title\\": \\"Jenkins Run #$BUILD_NUMBER\\" }")
+                  echo "$response" > qase_run.json
+                  runId=$(jq -r '.result.id' qase_run.json)
+                  echo "Created Qase Run ID = $runId"
+                  echo $runId > qase_run_id.txt
+                '''
+            }
+        }
 
-stage('Run Katalon Tests') {
-    steps {
-        sh '''
-        KATALON_HOME="/opt/Katalon_Studio_Engine_Linux_arm64-10.2.4"
-        DEVICE_ID=$(adb devices | grep -w "device" | grep -v "List" | awk '{print $1}' | head -n1)
-          echo "Using device: $DEVICE_ID"
-"$KATALON_HOME/katalonc" \
+        stage('Run Katalon Tests') {
+            steps {
+                sh '''
+                  KATALON_HOME="/opt/Katalon_Studio_Engine_Linux_arm64-10.2.4"
+                  DEVICE_ID=$(adb devices | grep -w "device" | grep -v "List" | awk '{print $1}' | head -n1)
+                  echo "Using device: $DEVICE_ID"
 
-    -projectPath="$(pwd)/Android Mobile Tests with Katalon Studio.prj" \
-     -testSuitePath="Test Suites/Smoke Tests for Mobile Browsers" \
-    -executionProfile="default" \
-    -executionPlatform="Android" \
-    -browserType="Android" \
-    -deviceId="$DEVICE_ID" \
-    -reportFolder=Reports \
-    -apiKey="$KATALON_API_KEY"
-        '''
-    }
-}
-
+                  "$KATALON_HOME/katalonc" \
+                    -projectPath="$(pwd)/Android Mobile Tests with Katalon Studio.prj" \
+                    -testSuitePath="Test Suites/Smoke Tests for Mobile Browsers" \
+                    -executionProfile="default" \
+                    -executionPlatform="Android" \
+                    -browserType="Android" \
+                    -deviceId="$DEVICE_ID" \
+                    -reportFolder=Reports \
+                    -apiKey="$KATALON_API_KEY"
+                '''
+            }
+        }
 
         stage('Send Results to Qase') {
             steps {
                 sh '''
-                runId=$(cat qase_run_id.txt)
-                echo "Sending results to Qase run $runId ..."
-                # Bisa pakai Katalon listener atau curl upload report
+                  runId=$(cat qase_run_id.txt)
+                  echo "Sending results to Qase run $runId ..."
+                  # Bisa pakai Katalon listener atau curl upload report
                 '''
             }
         }
