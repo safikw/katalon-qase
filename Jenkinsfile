@@ -50,7 +50,7 @@ pipeline {
                     -deviceId="$DEVICE_ID" \
                     -reportFolder=Reports \
                     -apiKey="$KATALON_API_KEY" \
-                    -appiumDriverUrl="http://localhost:4723/wd/hub"
+                    -appiumDriverUrl="http://host.docker.internal:4723/wd/hub"
                 '''
             }
         }
