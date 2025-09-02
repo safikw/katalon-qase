@@ -6,13 +6,15 @@ pipeline {
         QASE_API_TOKEN    = credentials('QASE_API_TOKEN')
         KATALON_API_KEY   = credentials('KATALON_API_KEY')
         STF_DEVICE        = "stf:7401"
+        KATALON_HOME      = "/opt/Katalon_Studio_Engine_Linux_arm64-10.2.4"
     }
 
-    stages {  
+    stages {
         stage('Check Devices') {
             steps {
                 sh '''
-                  adb devices
+                  echo ">> Cek devices dengan adb bawaan Katalon"
+                  ${KATALON_HOME}/configuration/resources/tools/android/sdk/platform-tools/adb devices
                 '''
             }
         }
@@ -21,9 +23,9 @@ pipeline {
             steps {
                 sh '''
                   echo "Creating new Qase run..."
-                  response=$(curl -s -X POST "https://api.qase.io/v1/run/$QASE_PROJECT_CODE" \\
-                    -H "Token: $QASE_API_TOKEN" \\
-                    -H "Content-Type: application/json" \\
+                  response=$(curl -s -X POST "https://api.qase.io/v1/run/$QASE_PROJECT_CODE" \
+                    -H "Token: $QASE_API_TOKEN" \
+                    -H "Content-Type: application/json" \
                     -d "{ \\"title\\": \\"Jenkins Run #$BUILD_NUMBER\\" }")
                   echo "$response" > qase_run.json
                   runId=$(jq -r '.result.id' qase_run.json)
@@ -36,22 +38,27 @@ pipeline {
         stage('Run Katalon Tests') {
             steps {
                 sh '''
-                adb start-server
-                  KATALON_HOME="/opt/Katalon_Studio_Engine_Linux_arm64-10.2.4"
-                  DEVICE_ID=$(adb devices | awk 'NR==2 {print $1}')
-                  echo "Using device: $DEVICE_ID"
-                  SERIAL=$(adb -s $DEVICE_ID shell getprop ro.serialno | tr -d '\r')
+                  echo ">> Start adb server dari Katalon"
+                  ${KATALON_HOME}/configuration/resources/tools/android/sdk/platform-tools/adb start-server
 
-                  "$KATALON_HOME/katalonc" \\
-                    -projectPath="$(pwd)/Android Mobile Tests with Katalon Studio.prj" \\
-                    -testSuitePath="Test Suites/Smoke Tests for Mobile Browsers" \\
-                    -executionProfile="default" \\
-                    -executionPlatform="Android" \\
-                    -browserType="Android" \\
-                    -reportFolder=Reports \\
-                    -apiKey="$KATALON_API_KEY" \\
-                    -appiumDriverUrl="http://host.docker.internal:4723" \\
-                    -additionalDesiredCapabilities="{\"udid\":\"$SERIAL\"}"
+                  echo ">> Detect device"
+                  DEVICE_ID=$(${KATALON_HOME}/configuration/resources/tools/android/sdk/platform-tools/adb devices | awk 'NR==2 {print $1}')
+                  echo "Using device: $DEVICE_ID"
+
+                  SERIAL=$(${KATALON_HOME}/configuration/resources/tools/android/sdk/platform-tools/adb -s $DEVICE_ID shell getprop ro.serialno | tr -d '\\r')
+                  echo "Serial: $SERIAL"
+
+                  echo ">> Run Katalon Test Suite"
+                  "$KATALON_HOME/katalonc" \
+                    -projectPath="$(pwd)/Android Mobile Tests with Katalon Studio.prj" \
+                    -testSuitePath="Test Suites/Smoke Tests for Mobile Browsers" \
+                    -executionProfile="default" \
+                    -executionPlatform="Android" \
+                    -browserType="Android" \
+                    -reportFolder=Reports \
+                    -apiKey="$KATALON_API_KEY" \
+                    -appiumDriverUrl="http://host.docker.internal:4723" \
+                    -additionalDesiredCapabilities="{\\"udid\\":\\"$SERIAL\\"}"
                 '''
             }
         }
@@ -61,7 +68,7 @@ pipeline {
                 sh '''
                   runId=$(cat qase_run_id.txt)
                   echo "Sending results to Qase run $runId ..."
-                  # Bisa pakai Katalon listener atau curl upload report
+                  # TODO: Integrasi upload report ke Qase
                 '''
             }
         }
