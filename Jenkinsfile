@@ -47,10 +47,10 @@ pipeline {
                     -testSuitePath="Test Suites/Smoke Tests for Mobile Browsers" \\
                     -executionProfile="default" \\
                     -browserType="Android" \\
+                    -deviceId="192.168.1.10:7401" \\
                     -reportFolder=Reports \\
                     -apiKey="$KATALON_API_KEY" \\
                     -g_appiumDriverUrl="http://host.docker.internal:4723" \\
-                    -g_udid="192.168.1.10:7401"
 
                 '''
             }
