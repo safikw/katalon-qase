@@ -33,11 +33,16 @@ pipeline {
             }
         }
 
-        stage('Check Katalon Devices') {
+stage('Check Katalon Devices') {
     steps {
         sh '''
+          echo "📱 Aktivasi Katalon..."
+          /opt/Katalon_Studio_Engine_Linux_arm64-10.2.4/katalonc \
+            -apiKey=$KATALON_API_KEY \
+            -licenseRelease
+
           echo "📱 Cek devices dengan Katalon:"
-          DEVICE=$(/opt/Katalon_Studio_Engine_Linux_arm64-10.2.4/katalonc -listDevices | grep -oP "id:\\s*\\K\\S+")
+          DEVICE=$(/opt/Katalon_Studio_Engine_Linux_arm64-10.2.4/katalonc -listDevices | awk -F"id:" '{print $2}' | awk '{print $1}')
           echo "✅ Device terdeteksi: $DEVICE"
         '''
     }
@@ -63,7 +68,6 @@ pipeline {
                     -reportFolder=Reports \\
                     -apiKey="$KATALON_API_KEY" \\
                     -g_appiumDriverUrl="http://host.docker.internal:4723" \\
-
                 '''
             }
         }
