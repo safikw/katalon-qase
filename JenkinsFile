@@ -36,43 +36,43 @@ pipeline {
             }
         }
 
-        stage('Run Katalon Test') {
+         stage('Run Katalon Test') {
             steps {
                 script {
                     def appiumPID
 
                     try {
-                        echo "Starting Appium server in the background..."
+                        echo "Starting Appium server..."
                         appiumPID = sh(script: "appium > appium-server-log.txt 2>&1 & echo \$!", returnStdout: true).trim()
-                        
-                        if (appiumPID) {
-                            echo "Appium started successfully with PID: ${appiumPID}"
-                            echo "Waiting for Appium server to initialize..."
-                            sleep(20)
+                        if (!appiumPID) {
+                            error("Failed to start Appium server.")
+                        }
 
-                            withCredentials([string(credentialsId: 'KATALON_API_KEY', variable: 'KATALON_API_KEY')]) {
-                                sh """
-                                    echo "Using device: $DEVICE_IP"
-                                    $KATALON_HOME/katalonc \\
-                                        -noSplash \\
-                                        -runMode=console \\
-                                        -projectPath="$PROJECT_PATH" \\
-                                        -retry=0 \\
-                                        -testSuitePath="$TEST_SUITE" \\
-                                        -browserType="Android" \\
-                                        -deviceId="$DEVICE_IP" \\
-                                        -executionProfile="default" \\
-                                        -apiKey="\$KATALON_API_KEY" \\
-                                        --config -g_appiumDriverUrl=$APP_DRIVER_URL
-                                """
-                            }
-                        } else {
-                            error("Failed to start Appium server. Check the logs.")
+                        // Tampilkan log Appium realtime
+                        sh "tail -f appium-server-log.txt &"
+
+                        echo "Waiting 20s for Appium to initialize..."
+                        sleep(20)
+
+                        withCredentials([string(credentialsId: 'KATALON_API_KEY', variable: 'KATALON_API_KEY')]) {
+                            sh """
+                                $KATALON_HOME/katalonc \\
+                                    -noSplash \\
+                                    -runMode=console \\
+                                    -projectPath="$PROJECT_PATH" \\
+                                    -retry=0 \\
+                                    -testSuitePath="$TEST_SUITE" \\
+                                    -browserType="Android" \\
+                                    -deviceId="$DEVICE_IP" \\
+                                    -executionProfile="default" \\
+                                    -apiKey="\$KATALON_API_KEY" \\
+                                    --config -g_appiumDriverUrl=$APP_DRIVER_URL
+                            """
                         }
 
                     } finally {
                         if (appiumPID) {
-                            echo "Cleaning up and stopping Appium server (PID: ${appiumPID})..."
+                            echo "Stopping Appium server (PID: ${appiumPID})..."
                             sh "kill ${appiumPID} || true"
                         }
                     }
