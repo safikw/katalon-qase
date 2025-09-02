@@ -57,7 +57,7 @@ pipeline {
                             -proxy.system.option=NO_PROXY \
                             -proxy.system.applyToDesiredCapabilities=true \
                             -webui.autoUpdateDrivers=true \
-                            -g_appiumDriverUrl="$APP_DRIVER_URL"
+                            -g_appiumDriverUrl=http://localhost:4723.
                     """
                 }
             }
