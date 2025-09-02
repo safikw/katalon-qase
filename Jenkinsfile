@@ -47,10 +47,10 @@ pipeline {
                     -executionProfile="default" \
                     -executionPlatform="Android" \
                     -browserType="Android" \
-                    -deviceId="$DEVICE_ID" \
                     -reportFolder=Reports \
                     -apiKey="$KATALON_API_KEY" \
-                    -appiumDriverUrl="http://host.docker.internal:4723/wd/hub"
+                    -appiumDriverUrl="http://host.docker.internal:4723" \
+                    -additionalDesiredCapabilities="{\"udid\":\"$DEVICE_ID\"}"
                 '''
             }
         }
