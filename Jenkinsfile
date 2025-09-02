@@ -80,14 +80,40 @@ pipeline {
             }
         }
 
-        stage('Send Results to Qase') {
-            steps {
-                sh '''
-                    runId=$(cat qase_run_id.txt)
-                    echo "Sending results to Qase run $runId ..."
-                '''
-            }
+stage('Send Results to Qase') {
+    steps {
+        withCredentials([string(credentialsId: 'QASE_API_TOKEN', variable: 'QASE_API_TOKEN')]) {
+            sh '''
+                runId=$(cat qase_run_id.txt)
+                echo "Sending results to Qase run $runId ..."
+
+                # Ambil hasil JUnit Katalon
+                for file in $(find Reports -name "JUnit_Report.xml"); do
+                    echo "Processing $file"
+
+                    # Kirim hasil test ke Qase via API
+                    curl -s -X POST "https://api.qase.io/v1/result/$QASE_PROJECT_CODE/$runId" \
+                        -H "Token: $QASE_API_TOKEN" \
+                        -H "Content-Type: application/json" \
+                        -d @<(python3 - <<'EOF'
+import xml.etree.ElementTree as ET, json, sys
+tree = ET.parse(sys.argv[1])
+root = tree.getroot()
+results = []
+for testcase in root.findall('.//testcase'):
+    status = 'passed' if not testcase.findall('failure') else 'failed'
+    results.append({
+        "case_id": testcase.attrib.get('name'),  # pastikan ini sesuai ID Qase atau mapping
+        "status": status
+    })
+print(json.dumps({"results": results}))
+EOF
+"$file")
+                done
+            '''
         }
+    }
+}
 
         stage('Archive Reports') {
             steps {
