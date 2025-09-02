@@ -51,7 +51,7 @@ pipeline {
                     -reportFolder=Reports \\
                     -apiKey="$KATALON_API_KEY" \\
                     -appiumDriverUrl="http://host.docker.internal:4723" \\
-                    -additionalDesiredCapabilities="{\"udid\":\"$SERIAL\"}"
+                    -deviceId="$DEVICE_ID" 
                 '''
             }
         }
