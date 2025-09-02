@@ -23,13 +23,21 @@ pipeline {
             }
         }
 
-        stage('Setup Environment') {
-            steps {
-                echo 'Installing Appium drivers...'
-                sh 'appium driver install uiautomator2'
-                sh 'appium driver list'
-            }
-        }
+stage('Setup Environment') {
+    echo 'Installing Appium drivers if not installed...'
+    sh '''
+    if ! appium driver list --installed | grep -q uiautomator2; then
+        echo "Installing uiautomator2 driver..."
+        appium driver install uiautomator2
+    else
+        echo "Driver uiautomator2 already installed, skipping..."
+    fi
+
+    echo "Listing all Appium drivers:"
+    appium driver list
+    '''
+}
+
 
         stage('Start Appium Server') {
             steps {
