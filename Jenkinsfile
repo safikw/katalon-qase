@@ -6,7 +6,7 @@ pipeline {
         DEVICE_IP         = "192.168.1.10:7401"
         KATALON_HOME      = "/opt/Katalon_Studio_Engine_Linux_arm64-10.2.4"
         PROJECT_PATH      = "/var/jenkins_home/workspace/jenkins-qase/Android Mobile Tests with Katalon Studio.prj"
-        TEST_SUITE        = "Test Suites/Smoke Tests for Mobile Browsers"
+        TEST_SUITE        = "Test Suites/Smoke Tests for API Demos App"
         APP_DRIVER_URL    = "http://localhost:4723"
     }
 
