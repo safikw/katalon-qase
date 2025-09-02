@@ -40,6 +40,7 @@ pipeline {
                   KATALON_HOME="/opt/Katalon_Studio_Engine_Linux_arm64-10.2.4"
                   DEVICE_ID=$(adb devices | awk 'NR==2 {print $1}')
                   echo "Using device: $DEVICE_ID"
+                  SERIAL=$(adb -s $DEVICE_ID shell getprop ro.serialno | tr -d '\r')
 
                   "$KATALON_HOME/katalonc" \
                     -projectPath="$(pwd)/Android Mobile Tests with Katalon Studio.prj" \
@@ -51,6 +52,7 @@ pipeline {
                     -apiKey="$KATALON_API_KEY" \
                     -appiumDriverUrl="http://host.docker.internal:4723" \
                     -deviceId="$DEVICE_ID"
+                    -additionalDesiredCapabilities="{\"udid\":\"$SERIAL\"}"
                 '''
             }
         }
