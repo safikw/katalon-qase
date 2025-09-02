@@ -23,25 +23,28 @@ pipeline {
             }
         }
 
-stage('Setup Environment') {
-    steps{
-    echo 'Installing Appium drivers if not installed...'
-    sh '''
-    set +e  # jangan exit saat perintah gagal
-    DRIVER_INSTALLED=$(appium driver list --installed | grep uiautomator2)
-    if [ -z "$DRIVER_INSTALLED" ]; then
-        echo "Installing uiautomator2 driver..."
-        appium driver install uiautomator2
-    else
-        echo "Driver uiautomator2 already installed, skipping..."
-    fi
-    set -e  # kembali exit on error
-    appium driver list
-    '''
-}
-}
+        stage('Setup Appium Environment') {
+            steps {
+                echo 'Preparing Appium temp folder and drivers...'
+                sh '''
+                # Buat folder tmp Katalon/Appium jika belum ada
+                mkdir -p /tmp/Katalon/Appium
 
+                # Cek dan install uiautomator2 driver
+                set +e
+                DRIVER_INSTALLED=$(appium driver list --installed | grep uiautomator2)
+                if [ -z "$DRIVER_INSTALLED" ]; then
+                    echo "Installing uiautomator2 driver..."
+                    appium driver install uiautomator2
+                else
+                    echo "Driver uiautomator2 already installed, skipping..."
+                fi
+                set -e
 
+                appium driver list
+                '''
+            }
+        }
 
         stage('Start Appium Server') {
             steps {
@@ -84,7 +87,7 @@ stage('Setup Environment') {
                         -deviceId=${DEVICE_IP} \
                         -executionProfile=default \
                         -apiKey=${KATALON_API_KEY} \
-                        --config -g_appiumDriverUrl=${APP_DRIVER_URL}
+                        --config -g_appiumDriverUrl=${APP_DRIVER_URL} -g_appiumTmpDir="/tmp/Katalon/Appium"
                     """
                 }
             }
