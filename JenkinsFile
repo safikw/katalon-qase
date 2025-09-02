@@ -41,6 +41,10 @@ pipeline {
                   DEVICE_ID=$(adb devices | awk 'NR==2 {print $1}')
                   echo "Using device: $DEVICE_ID"
                   SERIAL=$(adb -s $DEVICE_ID shell getprop ro.serialno | tr -d '\r')
+                  echo "📱 Cek devices dengan Katalon:"
+                DEVICE=$(/opt/Katalon_Studio_Engine_Linux_arm64-10.2.4/katalonc -listDevices | grep -oP 'id:\s*\K\S+')
+                  echo "✅ Device terdeteksi: $DEVICE"
+
 
                   "$KATALON_HOME/katalonc" \\
                     -projectPath="$(pwd)/Android Mobile Tests with Katalon Studio.prj" \\
