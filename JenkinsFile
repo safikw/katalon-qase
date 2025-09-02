@@ -50,7 +50,7 @@ pipeline {
                     -testSuitePath="Test Suites/Smoke Tests for Mobile Browsers" \\
                     -executionProfile="default" \\
                     -browserType="Android" \\
-                    -deviceId="$SERIAL" \\
+                    -deviceId="$DEVICE_ID" \\
                     -reportFolder=Reports \\
                     -apiKey="$KATALON_API_KEY" \\
                     -g_appiumDriverUrl="http://localhost:4723"
