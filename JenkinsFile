@@ -46,18 +46,6 @@ pipeline {
             }
         }
 
-        stage('Start Appium Server') {
-            steps {
-                echo 'Starting Appium server...'
-                sh '''
-                appium > appium-server-log.txt 2>&1 &
-                APP_PID=$!
-                echo $APP_PID > appium.pid
-                sleep 15
-                '''
-            }
-        }
-
         stage('Create Qase Run') {
             steps {
                 withCredentials([string(credentialsId: 'QASE_API_TOKEN', variable: 'QASE_API_TOKEN')]) {
@@ -92,18 +80,24 @@ pipeline {
                 }
             }
         }
+    }
 
-        stage('Stop Appium Server') {
-            steps {
-                sh '''
-                if [ -f appium.pid ]; then
-                    kill $(cat appium.pid) || true
-                    rm appium.pid
-                fi
-                '''
-            }
+    stage('Update Qase Run') {
+    steps {
+        withCredentials([string(credentialsId: 'QASE_API_TOKEN', variable: 'QASE_API_TOKEN')]) {
+            sh '''
+            echo "Marking Qase run as complete..."
+            runId=$(jq -r .result.id qase_run.json)
+
+            curl -s -X PATCH https://api.qase.io/v1/run/${QASE_PROJECT_CODE}/$runId \
+                -H "Token: $QASE_API_TOKEN" \
+                -H "Content-Type: application/json" \
+                -d '{ "status": "completed" }'
+            '''
         }
     }
+}
+
 
     post {
         always {
