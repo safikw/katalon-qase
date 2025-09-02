@@ -24,6 +24,7 @@ pipeline {
         }
 
 stage('Setup Environment') {
+    steps{}
     echo 'Installing Appium drivers if not installed...'
     sh '''
     set +e  # jangan exit saat perintah gagal
@@ -37,6 +38,7 @@ stage('Setup Environment') {
     set -e  # kembali exit on error
     appium driver list
     '''
+}
 }
 
 
