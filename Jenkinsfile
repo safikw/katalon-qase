@@ -18,6 +18,14 @@ pipeline {
             }
         }
 
+        stage('Setup Environment') {
+    steps {
+        echo "Installing Appium drivers..."
+        sh 'appium driver install uiautomator2'
+        sh 'appium driver list' // Untuk verifikasi di log
+    }
+}
+
         stage('Create Qase Run') {
             steps {
                 withCredentials([string(credentialsId: 'QASE_API_TOKEN', variable: 'QASE_API_TOKEN')]) {
@@ -50,9 +58,6 @@ pipeline {
 
                         // Tampilkan log Appium realtime
                         sh "tail -f appium-server-log.txt &"
-
-                        echo "Waiting 20s for Appium to initialize..."
-                        sleep(20)
 
                         withCredentials([string(credentialsId: 'KATALON_API_KEY', variable: 'KATALON_API_KEY')]) {
                             sh """
