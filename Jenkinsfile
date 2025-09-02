@@ -46,8 +46,6 @@ pipeline {
                     -projectPath="$(pwd)/Android Mobile Tests with Katalon Studio.prj" \\
                     -testSuitePath="Test Suites/Smoke Tests for Mobile Browsers" \\
                     -executionProfile="default" \\
-                    -executionPlatform="Android" \\
-                    -browserType="Android" \\
                     -reportFolder=Reports \\
                     -apiKey="$KATALON_API_KEY" \\
                     -g_appiumDriverUrl="http://host.docker.internal:4723" \\
