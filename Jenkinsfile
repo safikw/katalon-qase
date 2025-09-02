@@ -50,8 +50,9 @@ pipeline {
                     -browserType="Android" \\
                     -reportFolder=Reports \\
                     -apiKey="$KATALON_API_KEY" \\
-                    -appiumDriverUrl="http://host.docker.internal:4723" \\
-                    -deviceId="$DEVICE_ID" 
+                    -g_appiumDriverUrl="http://host.docker.internal:4723" \\
+                    -g_udid="192.168.1.10:7401"
+
                 '''
             }
         }
