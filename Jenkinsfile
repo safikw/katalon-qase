@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         QASE_PROJECT_CODE = "MKQ"
-        DEVICE_IP         = "192.168.1.10:7405"
+        DEVICE_IP         = sh(script: "adb devices | grep -w 'device\$' | cut -f1", returnStdout: true).trim()
         KATALON_HOME      = "/opt/Katalon_Studio_Engine_Linux_arm64-10.2.4"
         PROJECT_PATH      = "/var/jenkins_home/workspace/jenkins-qase/Android Mobile Tests with Katalon Studio.prj"
         TEST_SUITE        = "Test Suites/Smoke Tests for API Demos App"
