@@ -5,16 +5,22 @@ pipeline {
         QASE_PROJECT_CODE = "MKQ"
         QASE_API_TOKEN    = credentials('QASE_API_TOKEN')
         KATALON_API_KEY   = credentials('KATALON_API_KEY')
-        STF_DEVICE        = "stf:7401"
         KATALON_HOME      = "/opt/Katalon_Studio_Engine_Linux_arm64-10.2.4"
     }
 
-    stages {
+    stages {  
         stage('Check Devices') {
             steps {
                 sh '''
-                  echo ">> Cek devices dengan adb bawaan Katalon"
-                  ${KATALON_HOME}/configuration/resources/tools/android/sdk/platform-tools/adb devices
+                  echo ">> Start adb bawaan container"
+                  adb start-server
+                  adb devices
+
+                  echo ">> Paksa Katalon pakai adb bawaan container"
+                  ln -sf $(which adb) $KATALON_HOME/configuration/resources/tools/android/sdk/platform-tools/adb
+
+                  echo ">> Cek devices pakai adb yang dipakai Katalon"
+                  $KATALON_HOME/configuration/resources/tools/android/sdk/platform-tools/adb devices || true
                 '''
             }
         }
@@ -38,17 +44,13 @@ pipeline {
         stage('Run Katalon Tests') {
             steps {
                 sh '''
-                  echo ">> Start adb server dari Katalon"
-                  ${KATALON_HOME}/configuration/resources/tools/android/sdk/platform-tools/adb start-server
-
-                  echo ">> Detect device"
-                  DEVICE_ID=$(${KATALON_HOME}/configuration/resources/tools/android/sdk/platform-tools/adb devices | awk 'NR==2 {print $1}')
+                  echo ">> Ambil device dari adb"
+                  DEVICE_ID=$(adb devices | awk 'NR==2 {print $1}')
                   echo "Using device: $DEVICE_ID"
 
-                  SERIAL=$(${KATALON_HOME}/configuration/resources/tools/android/sdk/platform-tools/adb -s $DEVICE_ID shell getprop ro.serialno | tr -d '\\r')
+                  SERIAL=$(adb -s $DEVICE_ID shell getprop ro.serialno | tr -d '\\r')
                   echo "Serial: $SERIAL"
 
-                  echo ">> Run Katalon Test Suite"
                   "$KATALON_HOME/katalonc" \
                     -projectPath="$(pwd)/Android Mobile Tests with Katalon Studio.prj" \
                     -testSuitePath="Test Suites/Smoke Tests for Mobile Browsers" \
@@ -68,7 +70,7 @@ pipeline {
                 sh '''
                   runId=$(cat qase_run_id.txt)
                   echo "Sending results to Qase run $runId ..."
-                  # TODO: Integrasi upload report ke Qase
+                  # TODO: integrasi upload report ke Qase
                 '''
             }
         }
