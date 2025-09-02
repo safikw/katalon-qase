@@ -24,21 +24,21 @@ pipeline {
         }
 
 stage('Setup Environment') {
-    steps {
     echo 'Installing Appium drivers if not installed...'
     sh '''
-    if ! appium driver list --installed | grep -q uiautomator2; then
+    set +e  # jangan exit saat perintah gagal
+    DRIVER_INSTALLED=$(appium driver list --installed | grep uiautomator2)
+    if [ -z "$DRIVER_INSTALLED" ]; then
         echo "Installing uiautomator2 driver..."
         appium driver install uiautomator2
     else
         echo "Driver uiautomator2 already installed, skipping..."
     fi
-
-    echo "Listing all Appium drivers:"
+    set -e  # kembali exit on error
     appium driver list
     '''
-    }
 }
+
 
 
         stage('Start Appium Server') {
