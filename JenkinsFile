@@ -38,7 +38,7 @@ pipeline {
                 sh '''
                 adb start-server
                   KATALON_HOME="/opt/Katalon_Studio_Engine_Linux_arm64-10.2.4"
-                  DEVICE_ID=$(adb devices | grep -w "device" | awk '{print $1}')
+                  DEVICE_ID=$(adb -s 192.168.1.10:7401 shell getprop ro.serialno | tr -d '\r')
                   echo "Using device: $DEVICE_ID"
 
                   "$KATALON_HOME/katalonc" \
