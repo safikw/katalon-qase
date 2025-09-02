@@ -24,6 +24,7 @@ pipeline {
         }
 
 stage('Setup Environment') {
+    steps {
     echo 'Installing Appium drivers if not installed...'
     sh '''
     if ! appium driver list --installed | grep -q uiautomator2; then
@@ -36,6 +37,7 @@ stage('Setup Environment') {
     echo "Listing all Appium drivers:"
     appium driver list
     '''
+    }
 }
 
 
