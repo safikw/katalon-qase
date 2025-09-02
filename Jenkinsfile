@@ -38,49 +38,42 @@ pipeline {
 
         stage('Run Katalon Test') {
             steps {
-                // Gunakan 'script' block untuk mengizinkan penulisan skrip Groovy (try...finally)
                 script {
-                    def appiumPID // Variabel untuk menyimpan ID proses Appium
+                    def appiumPID
 
                     try {
-                        // 1. Mulai server Appium di background (&)
-                        // Outputnya disimpan ke file log untuk debugging jika diperlukan
                         echo "Starting Appium server in the background..."
-                        sh 'appium > appium-server-log.txt 2>&1 &'
+                        appiumPID = sh(script: "appium > appium-server-log.txt 2>&1 & echo \$!", returnStdout: true).trim()
                         
-                        // Dapatkan Process ID (PID) dari proses Appium yang baru saja dijalankan
-                        appiumPID = sh(script: 'echo $!', returnStdout: true).trim()
-                        echo "Appium started with PID: ${appiumPID}"
+                        if (appiumPID) {
+                            echo "Appium started successfully with PID: ${appiumPID}"
+                            echo "Waiting for Appium server to initialize..."
+                            sleep(20)
 
-                        // 2. Beri waktu beberapa detik agar Appium benar-benar siap
-                        echo "Waiting for Appium server to initialize..."
-                        sleep(20) // Waktu tunggu 20 detik, bisa disesuaikan
-
-                        // 3. Jalankan perintah Katalon Anda seperti biasa
-                        // Katalon akan otomatis terhubung ke Appium yang sudah berjalan
-                        withCredentials([string(credentialsId: 'KATALON_API_KEY', variable: 'KATALON_API_KEY')]) {
-                            sh """
-                                echo "Using device: $DEVICE_IP"
-
-                                $KATALON_HOME/katalonc \\
-                                    -noSplash \\
-                                    -runMode=console \\
-                                    -projectPath="$PROJECT_PATH" \\
-                                    -retry=0 \\
-                                    -testSuitePath="$TEST_SUITE" \\
-                                    -browserType="Android" \\
-                                    -deviceId="$DEVICE_IP" \\
-                                    -executionProfile="default" \\
-                                    -apiKey="\$KATALON_API_KEY" \\
-                                    --config -g_appiumDriverUrl=$APP_DRIVER_URL
-                            """
+                            withCredentials([string(credentialsId: 'KATALON_API_KEY', variable: 'KATALON_API_KEY')]) {
+                                sh """
+                                    echo "Using device: $DEVICE_IP"
+                                    $KATALON_HOME/katalonc \\
+                                        -noSplash \\
+                                        -runMode=console \\
+                                        -projectPath="$PROJECT_PATH" \\
+                                        -retry=0 \\
+                                        -testSuitePath="$TEST_SUITE" \\
+                                        -browserType="Android" \\
+                                        -deviceId="$DEVICE_IP" \\
+                                        -executionProfile="default" \\
+                                        -apiKey="\$KATALON_API_KEY" \\
+                                        --config -g_appiumDriverUrl=$APP_DRIVER_URL
+                                """
+                            }
+                        } else {
+                            error("Failed to start Appium server. Check the logs.")
                         }
 
                     } finally {
-                        // 4. Matikan server Appium setelah tes selesai (baik berhasil maupun gagal)
-                        echo "Cleaning up and stopping the Appium server..."
                         if (appiumPID) {
-                            sh "kill ${appiumPID}"
+                            echo "Cleaning up and stopping Appium server (PID: ${appiumPID})..."
+                            sh "kill ${appiumPID} || true"
                         }
                     }
                 }
@@ -92,7 +85,6 @@ pipeline {
                 sh '''
                     runId=$(cat qase_run_id.txt)
                     echo "Sending results to Qase run $runId ..."
-                    # TODO: Upload report via Qase CLI or API
                 '''
             }
         }
