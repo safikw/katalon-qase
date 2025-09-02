@@ -26,6 +26,16 @@ pipeline {
     }
 }
 
+stage('Diagnostic') {
+    steps {
+        sh 'whoami'      // Menunjukkan user yang menjalankan build
+        sh 'env'         // Menunjukkan semua environment variable
+        sh 'pwd'         // Menunjukkan direktori kerja saat ini
+        sh 'ls -la'      // Melihat izin file di workspace
+        sh 'which appium'// Memastikan path Appium
+    }
+}
+
         stage('Create Qase Run') {
             steps {
                 withCredentials([string(credentialsId: 'QASE_API_TOKEN', variable: 'QASE_API_TOKEN')]) {
