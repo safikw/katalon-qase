@@ -38,27 +38,51 @@ pipeline {
 
         stage('Run Katalon Test') {
             steps {
-                withCredentials([string(credentialsId: 'KATALON_API_KEY', variable: 'KATALON_API_KEY')]) {
-                    sh """
-                        adb start-server
-                        echo "Using device: $DEVICE_IP"
+                // Gunakan 'script' block untuk mengizinkan penulisan skrip Groovy (try...finally)
+                script {
+                    def appiumPID // Variabel untuk menyimpan ID proses Appium
 
-                        $KATALON_HOME/katalonc \
-                            -noSplash \
-                            -runMode=console \
-                            -projectPath="$PROJECT_PATH" \
-                            -retry=0 \
-                            -testSuitePath="$TEST_SUITE" \
-                            -browserType="Android" \
-                            -deviceId="$DEVICE_IP" \
-                            -executionProfile="default" \
-                            -apiKey="$KATALON_API_KEY" \
-                            --config -proxy.auth.option=NO_PROXY \
-                            -proxy.system.option=NO_PROXY \
-                            -proxy.system.applyToDesiredCapabilities=true \
-                            -webui.autoUpdateDrivers=true \
-                            -g_appiumDriverUrl=http://localhost:4723
-                    """
+                    try {
+                        // 1. Mulai server Appium di background (&)
+                        // Outputnya disimpan ke file log untuk debugging jika diperlukan
+                        echo "Starting Appium server in the background..."
+                        sh 'appium > appium-server-log.txt 2>&1 &'
+                        
+                        // Dapatkan Process ID (PID) dari proses Appium yang baru saja dijalankan
+                        appiumPID = sh(script: 'echo $!', returnStdout: true).trim()
+                        echo "Appium started with PID: ${appiumPID}"
+
+                        // 2. Beri waktu beberapa detik agar Appium benar-benar siap
+                        echo "Waiting for Appium server to initialize..."
+                        sleep(20) // Waktu tunggu 20 detik, bisa disesuaikan
+
+                        // 3. Jalankan perintah Katalon Anda seperti biasa
+                        // Katalon akan otomatis terhubung ke Appium yang sudah berjalan
+                        withCredentials([string(credentialsId: 'KATALON_API_KEY', variable: 'KATALON_API_KEY')]) {
+                            sh """
+                                echo "Using device: $DEVICE_IP"
+
+                                $KATALON_HOME/katalonc \\
+                                    -noSplash \\
+                                    -runMode=console \\
+                                    -projectPath="$PROJECT_PATH" \\
+                                    -retry=0 \\
+                                    -testSuitePath="$TEST_SUITE" \\
+                                    -browserType="Android" \\
+                                    -deviceId="$DEVICE_IP" \\
+                                    -executionProfile="default" \\
+                                    -apiKey="\$KATALON_API_KEY" \\
+                                    --config -g_appiumDriverUrl=$APP_DRIVER_URL
+                            """
+                        }
+
+                    } finally {
+                        // 4. Matikan server Appium setelah tes selesai (baik berhasil maupun gagal)
+                        echo "Cleaning up and stopping the Appium server..."
+                        if (appiumPID) {
+                            sh "kill ${appiumPID}"
+                        }
+                    }
                 }
             }
         }
@@ -75,7 +99,7 @@ pipeline {
 
         stage('Archive Reports') {
             steps {
-                archiveArtifacts artifacts: 'qase_run*.txt', followSymlinks: false
+                archiveArtifacts artifacts: 'qase_run*.txt, appium-server-log.txt', followSymlinks: false
                 junit '**/Reports/**/JUnit_Report.xml'
             }
         }
