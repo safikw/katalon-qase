@@ -115,7 +115,6 @@ for testcase in root.iter("testcase"):
             "status": status,
             "comment": f"Executed by Jenkins build ${BUILD_NUMBER}"
         }
-        r = requests.post(
         cmd = f'''curl -s -X POST "https://api.qase.io/v1/result/{PROJECT}/{run_id}" \
             -H "Content-Type: application/json" \
             -H "Token: {QASE_TOKEN}" \
