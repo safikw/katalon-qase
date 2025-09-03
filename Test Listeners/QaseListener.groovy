@@ -1,7 +1,9 @@
 import com.kms.katalon.core.annotation.*
-import com.kms.katalon.core.context.TestCaseContext
 import com.kms.katalon.core.configuration.RunConfiguration
+import com.kms.katalon.core.context.TestCaseContext
+
 import groovy.json.JsonOutput
+import internal.GlobalVariable
 
 class QaseListener {
     static String runId
@@ -10,9 +12,9 @@ class QaseListener {
 
     @BeforeTestSuite
     def beforeSuite() {
-        runId = RunConfiguration.getExecutionProperties().get("runId")
-        projectCode = RunConfiguration.getExecutionProperties().get("projectCode")
-        token = RunConfiguration.getExecutionProperties().get("qaseToken")
+        runId = GlobalVariable.runId
+        projectCode = GlobalVariable.projectCode
+        token = GlobalVariable.qaseToken
 
         if (!runId || !projectCode || !token) {
             println "⚠️ Qase config missing: runId=$runId, projectCode=$projectCode, token=$token"

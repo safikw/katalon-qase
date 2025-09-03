@@ -6,8 +6,8 @@
    <UUID>68ba465c-6207-4619-976a-7a816e4c56ad</UUID>
    <freeLicense>false</freeLicense>
    <migratedVersion>5.9.0</migratedVersion>
-   <modifiedEdition>FREE</modifiedEdition>
-   <modifiedVersion>10.2.4</modifiedVersion>
+   <modifiedEdition>ENTERPRISE</modifiedEdition>
+   <modifiedVersion>10.3.1</modifiedVersion>
    <pageLoadTimeout>0</pageLoadTimeout>
    <projectFileLocation>/Users/safik/Desktop/kerjaan/qa/RND/katalon-qase/Android Mobile Tests with Katalon Studio.prj</projectFileLocation>
    <sourceContent>
