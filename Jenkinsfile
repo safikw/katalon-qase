@@ -86,6 +86,9 @@ pipeline {
                     runId=\$(jq -r .result.id qase_run.json)
                     echo "Parsing JUnit and uploading to Qase (runId=\$runId)..."
 
+                    echo "===> DEBUG: Listing Reports folder"
+                    ls -R Reports || true
+
                     python3 << 'EOF'
 import xml.etree.ElementTree as ET
 import os, sys, glob
@@ -94,14 +97,18 @@ QASE_TOKEN = os.getenv("QASE_API_TOKEN")
 PROJECT = "${QASE_PROJECT_CODE}"
 run_id = os.popen("jq -r .result.id qase_run.json").read().strip()
 
-files = glob.glob("Reports/*/JUnit_Report.xml")
+files = glob.glob("Reports/**/*.xml", recursive=True)
 if not files:
-    print("JUnit report not found")
+    print("JUnit report not found in Reports/")
     sys.exit(1)
 
 for report in files:
     print(f"Processing report: {report}")
-    tree = ET.parse(report)
+    try:
+        tree = ET.parse(report)
+    except Exception as e:
+        print(f"Skipping {report}, parse error: {e}")
+        continue
     root = tree.getroot()
 
     for testcase in root.iter("testcase"):
@@ -124,6 +131,22 @@ for report in files:
             print(f"Uploaded case {case_id} with status {status}")
 EOF
                     """
+                }
+            }
+        }
+
+        stage('Update Qase Run') {
+            steps {
+                withCredentials([string(credentialsId: 'QASE_API_TOKEN', variable: 'QASE_API_TOKEN')]) {
+                    sh '''
+                    echo "Marking Qase run as complete..."
+                    runId=$(jq -r .result.id qase_run.json)
+
+                    curl -s -X PATCH https://api.qase.io/v1/run/${QASE_PROJECT_CODE}/$runId \
+                        -H "Token: $QASE_API_TOKEN" \
+                        -H "Content-Type: application/json" \
+                        -d '{ "status": "completed" }'
+                    '''
                 }
             }
         }
