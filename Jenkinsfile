@@ -86,55 +86,43 @@ pipeline {
                     runId=\$(jq -r .result.id qase_run.json)
                     echo "Parsing JUnit and uploading to Qase (runId=\$runId)..."
 
-                    python3 <<EOF
+                    python3 << 'EOF'
 import xml.etree.ElementTree as ET
-import os
+import os, sys, glob
 
 QASE_TOKEN = os.getenv("QASE_API_TOKEN")
 PROJECT = "${QASE_PROJECT_CODE}"
 run_id = os.popen("jq -r .result.id qase_run.json").read().strip()
 
-# cari file JUnit di folder Reports
-import glob
 files = glob.glob("Reports/*/JUnit_Report.xml")
 if not files:
     print("JUnit report not found")
-    exit(1)
+    sys.exit(1)
 
-tree = ET.parse(files[0])
-root = tree.getroot()
+for report in files:
+    print(f"Processing report: {report}")
+    tree = ET.parse(report)
+    root = tree.getroot()
 
-for testcase in root.iter("testcase"):
-    name = testcase.attrib.get("name", "")
-    if "[QASE-" in name:
-        case_id = int(name.split("[QASE-")[1].split("]")[0])
-        status = "passed"
-        if testcase.find("failure") is not None:
-            status = "failed"
+    for testcase in root.iter("testcase"):
+        name = testcase.attrib.get("name", "")
+        if "[QASE-" in name:
+            try:
+                case_id = int(name.split("[QASE-")[1].split("]")[0])
+            except Exception:
+                continue
 
-        cmd = f'''curl -s -X POST "https://api.qase.io/v1/result/{PROJECT}/{run_id}" \
-            -H "Content-Type: application/json" \
-            -H "Token: {QASE_TOKEN}" \
-            -d '{{"case_id": {case_id}, "status": "{status}", "comment": "Executed by Jenkins build ${BUILD_NUMBER}"}}' '''
-        os.system(cmd)
-        print(f"Uploaded case {case_id} with status {status}")
+            status = "passed"
+            if testcase.find("failure") is not None:
+                status = "failed"
+
+            cmd = f'''curl -s -X POST "https://api.qase.io/v1/result/{PROJECT}/{run_id}" \
+                -H "Content-Type: application/json" \
+                -H "Token: {QASE_TOKEN}" \
+                -d '{{"case_id": {case_id}, "status": "{status}", "comment": "Executed by Jenkins build ${BUILD_NUMBER}"}}' '''
+            os.system(cmd)
+            print(f"Uploaded case {case_id} with status {status}")
 EOF
-                    """
-                }
-            }
-        }
-
-        stage('Complete Qase Run') {
-            steps {
-                withCredentials([string(credentialsId: 'QASE_API_TOKEN', variable: 'QASE_API_TOKEN')]) {
-                    sh """
-                    runId=\$(jq -r .result.id qase_run.json)
-                    echo "Marking Qase run \$runId as completed..."
-
-                    curl -s -X PATCH https://api.qase.io/v1/run/${QASE_PROJECT_CODE}/\$runId \
-                        -H "Token: $QASE_API_TOKEN" \
-                        -H "Content-Type: application/json" \
-                        -d '{ "status": "completed" }'
                     """
                 }
             }
