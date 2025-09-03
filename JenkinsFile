@@ -80,7 +80,7 @@ pipeline {
                 }
             }
         }
-    }
+    
 
     stage('Update Qase Run') {
     steps {
@@ -110,4 +110,5 @@ pipeline {
             echo "Build failed!"
         }
     }
+}
 }
