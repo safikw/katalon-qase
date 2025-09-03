@@ -116,12 +116,12 @@ for testcase in root.iter("testcase"):
             "comment": f"Executed by Jenkins build ${BUILD_NUMBER}"
         }
         r = requests.post(
-            f"https://api.qase.io/v1/result/{PROJECT}/{run_id}",
-            headers={"Content-Type":"application/json","Token":QASE_TOKEN},
-            json=payload
-        )
-        print(case_id, status, r.status_code)
-EOF
+        cmd = f'''curl -s -X POST "https://api.qase.io/v1/result/{PROJECT}/{run_id}" \
+            -H "Content-Type: application/json" \
+            -H "Token: {QASE_TOKEN}" \
+            -d '{{"case_id": {case_id}, "status": "{status}", "comment": "Executed by Jenkins build ${BUILD_NUMBER}"}}' '''
+        os.system(cmd)
+        print(f"Uploaded case {case_id} with status {status}")
             """
         }
     }
