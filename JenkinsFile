@@ -56,6 +56,7 @@ pipeline {
                         > qase_run.json
                     runId=\$(jq -r .result.id qase_run.json)
                     echo "Created Qase Run ID = \$runId"
+                    echo \$runId > run_id.txt
                     """
                 }
             }
@@ -63,8 +64,14 @@ pipeline {
 
         stage('Run Katalon Test') {
             steps {
-                withCredentials([string(credentialsId: 'KATALON_API_KEY', variable: 'KATALON_API_KEY')]) {
+                withCredentials([
+                    string(credentialsId: 'KATALON_API_KEY', variable: 'KATALON_API_KEY'),
+                    string(credentialsId: 'QASE_API_TOKEN', variable: 'QASE_API_TOKEN')
+                ]) {
                     sh """
+                    runId=\$(cat run_id.txt)
+                    echo "Starting Katalon test with Qase runId=\$runId"
+
                     ${KATALON_HOME}/katalonc -noSplash -runMode=console \
                         -projectPath="${PROJECT_PATH}" \
                         -retry=0 \
@@ -73,74 +80,21 @@ pipeline {
                         -deviceId=${DEVICE_IP} \
                         -executionProfile=default \
                         -apiKey=${KATALON_API_KEY} \
-                        --config -g_appiumDriverUrl=${APP_DRIVER_URL} -g_appiumTmpDir="/tmp/Katalon/Appium"
+                        --config -g_appiumDriverUrl=${APP_DRIVER_URL} -g_appiumTmpDir="/tmp/Katalon/Appium" \
+                        -g_runId=\$runId \
+                        -g_qaseToken=$QASE_API_TOKEN \
+                        -g_projectCode=${QASE_PROJECT_CODE}
                     """
                 }
             }
         }
 
-        stage('Upload Results to Qase') {
-            steps {
-                withCredentials([string(credentialsId: 'QASE_API_TOKEN', variable: 'QASE_API_TOKEN')]) {
-                    sh """
-                    runId=\$(jq -r .result.id qase_run.json)
-                    echo "Parsing JUnit and uploading to Qase (runId=\$runId)..."
-
-                    echo "===> DEBUG: Listing Reports folder"
-                    ls -R Reports || true
-
-                    python3 << 'EOF'
-import xml.etree.ElementTree as ET
-import os, sys, glob
-
-QASE_TOKEN = os.getenv("QASE_API_TOKEN")
-PROJECT = "${QASE_PROJECT_CODE}"
-run_id = os.popen("jq -r .result.id qase_run.json").read().strip()
-
-files = glob.glob("Reports/**/*.xml", recursive=True)
-if not files:
-    print("JUnit report not found in Reports/")
-    sys.exit(1)
-
-for report in files:
-    print(f"Processing report: {report}")
-    try:
-        tree = ET.parse(report)
-    except Exception as e:
-        print(f"Skipping {report}, parse error: {e}")
-        continue
-    root = tree.getroot()
-
-    for testcase in root.iter("testcase"):
-        name = testcase.attrib.get("name", "")
-        if "[QASE-" in name:
-            try:
-                case_id = int(name.split("[QASE-")[1].split("]")[0])
-            except Exception:
-                continue
-
-            status = "passed"
-            if testcase.find("failure") is not None:
-                status = "failed"
-
-            cmd = f'''curl -s -X POST "https://api.qase.io/v1/result/{PROJECT}/{run_id}" \
-                -H "Content-Type: application/json" \
-                -H "Token: {QASE_TOKEN}" \
-                -d '{{"case_id": {case_id}, "status": "{status}", "comment": "Executed by Jenkins build ${BUILD_NUMBER}"}}' '''
-            os.system(cmd)
-            print(f"Uploaded case {case_id} with status {status}")
-EOF
-                    """
-                }
-            }
-        }
-
-        stage('Update Qase Run') {
+        stage('Close Qase Run') {
             steps {
                 withCredentials([string(credentialsId: 'QASE_API_TOKEN', variable: 'QASE_API_TOKEN')]) {
                     sh '''
-                    echo "Marking Qase run as complete..."
-                    runId=$(jq -r .result.id qase_run.json)
+                    runId=$(cat run_id.txt)
+                    echo "Marking Qase run $runId as completed..."
 
                     curl -s -X PATCH https://api.qase.io/v1/run/${QASE_PROJECT_CODE}/$runId \
                         -H "Token: $QASE_API_TOKEN" \
@@ -157,10 +111,10 @@ EOF
             echo "Pipeline finished."
         }
         success {
-            echo "Build succeeded!"
+            echo "✅ Build succeeded!"
         }
         failure {
-            echo "Build failed!"
+            echo "❌ Build failed!"
         }
     }
 }
