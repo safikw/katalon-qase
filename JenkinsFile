@@ -27,10 +27,8 @@ pipeline {
             steps {
                 echo 'Preparing Appium temp folder and drivers...'
                 sh '''
-                # Buat folder tmp Katalon/Appium jika belum ada
                 mkdir -p /tmp/Katalon/Appium
 
-                # Cek dan install uiautomator2 driver
                 set +e
                 DRIVER_INSTALLED=$(appium driver list --installed | grep uiautomator2)
                 if [ -z "$DRIVER_INSTALLED" ]; then
@@ -46,23 +44,22 @@ pipeline {
             }
         }
 
-stage('Create Qase Run') {
-    steps {
-        withCredentials([string(credentialsId: 'QASE_API_TOKEN', variable: 'QASE_API_TOKEN')]) {
-            sh """
-            echo "Creating new Qase run..."
-            curl -s -X POST https://api.qase.io/v1/run/${QASE_PROJECT_CODE} \
-                -H "Token: $QASE_API_TOKEN" \
-                -H "Content-Type: application/json" \
-                -d '{ "title": "Jenkins Run #${BUILD_NUMBER}" }' \
-                > qase_run.json
-            runId=\$(jq -r .result.id qase_run.json)
-            echo "Created Qase Run ID = \$runId"
-            """
+        stage('Create Qase Run') {
+            steps {
+                withCredentials([string(credentialsId: 'QASE_API_TOKEN', variable: 'QASE_API_TOKEN')]) {
+                    sh """
+                    echo "Creating new Qase run..."
+                    curl -s -X POST https://api.qase.io/v1/run/${QASE_PROJECT_CODE} \
+                        -H "Token: $QASE_API_TOKEN" \
+                        -H "Content-Type: application/json" \
+                        -d '{ "title": "Jenkins Run #${BUILD_NUMBER}" }' \
+                        > qase_run.json
+                    runId=\$(jq -r .result.id qase_run.json)
+                    echo "Created Qase Run ID = \$runId"
+                    """
+                }
+            }
         }
-    }
-}
-
 
         stage('Run Katalon Test') {
             steps {
@@ -81,52 +78,67 @@ stage('Create Qase Run') {
                 }
             }
         }
-    
 
-stage('Upload Results to Qase') {
-    steps {
-        withCredentials([string(credentialsId: 'QASE_API_TOKEN', variable: 'QASE_API_TOKEN')]) {
-            sh """
-            runId=\$(jq -r .result.id qase_run.json)
-            echo "Parsing JUnit and uploading to Qase (runId=\$runId)..."
+        stage('Upload Results to Qase') {
+            steps {
+                withCredentials([string(credentialsId: 'QASE_API_TOKEN', variable: 'QASE_API_TOKEN')]) {
+                    sh """
+                    runId=\$(jq -r .result.id qase_run.json)
+                    echo "Parsing JUnit and uploading to Qase (runId=\$runId)..."
 
-            python3 << 'EOF'
+                    python3 <<EOF
 import xml.etree.ElementTree as ET
-import os, requests, sys
+import os
 
 QASE_TOKEN = os.getenv("QASE_API_TOKEN")
 PROJECT = "${QASE_PROJECT_CODE}"
 run_id = os.popen("jq -r .result.id qase_run.json").read().strip()
 
-tree = ET.parse("Reports/*/JUnit_Report.xml")
+# cari file JUnit di folder Reports
+import glob
+files = glob.glob("Reports/*/JUnit_Report.xml")
+if not files:
+    print("JUnit report not found")
+    exit(1)
+
+tree = ET.parse(files[0])
 root = tree.getroot()
 
 for testcase in root.iter("testcase"):
-    name = testcase.attrib["name"]
-    # Asumsi case_id disimpan di nama test seperti testLogin[QASE-12]
+    name = testcase.attrib.get("name", "")
     if "[QASE-" in name:
         case_id = int(name.split("[QASE-")[1].split("]")[0])
         status = "passed"
         if testcase.find("failure") is not None:
             status = "failed"
 
-        payload = {
-            "case_id": case_id,
-            "status": status,
-            "comment": f"Executed by Jenkins build ${BUILD_NUMBER}"
-        }
         cmd = f'''curl -s -X POST "https://api.qase.io/v1/result/{PROJECT}/{run_id}" \
             -H "Content-Type: application/json" \
             -H "Token: {QASE_TOKEN}" \
             -d '{{"case_id": {case_id}, "status": "{status}", "comment": "Executed by Jenkins build ${BUILD_NUMBER}"}}' '''
         os.system(cmd)
         print(f"Uploaded case {case_id} with status {status}")
-            """
+EOF
+                    """
+                }
+            }
         }
-    }
-}
 
+        stage('Complete Qase Run') {
+            steps {
+                withCredentials([string(credentialsId: 'QASE_API_TOKEN', variable: 'QASE_API_TOKEN')]) {
+                    sh """
+                    runId=\$(jq -r .result.id qase_run.json)
+                    echo "Marking Qase run \$runId as completed..."
 
+                    curl -s -X PATCH https://api.qase.io/v1/run/${QASE_PROJECT_CODE}/\$runId \
+                        -H "Token: $QASE_API_TOKEN" \
+                        -H "Content-Type: application/json" \
+                        -d '{ "status": "completed" }'
+                    """
+                }
+            }
+        }
     }
 
     post {
@@ -140,5 +152,4 @@ for testcase in root.iter("testcase"):
             echo "Build failed!"
         }
     }
-
 }
