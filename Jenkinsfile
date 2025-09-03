@@ -46,22 +46,23 @@ pipeline {
             }
         }
 
-        stage('Create Qase Run') {
-            steps {
-                withCredentials([string(credentialsId: 'QASE_API_TOKEN', variable: 'QASE_API_TOKEN')]) {
-                    sh '''
-                    echo "Creating new Qase run..."
-                    curl -s -X POST https://api.qase.io/v1/run/${QASE_PROJECT_CODE} \
-                        -H "Token: $QASE_API_TOKEN" \
-                        -H "Content-Type: application/json" \
-                        -d '{ "title": "Jenkins Run #${BUILD_NUMBER}" }' \
-                        > qase_run.json
-                    runId=$(jq -r .result.id qase_run.json)
-                    echo "Created Qase Run ID = $runId"
-                    '''
-                }
-            }
+stage('Create Qase Run') {
+    steps {
+        withCredentials([string(credentialsId: 'QASE_API_TOKEN', variable: 'QASE_API_TOKEN')]) {
+            sh """
+            echo "Creating new Qase run..."
+            curl -s -X POST https://api.qase.io/v1/run/${QASE_PROJECT_CODE} \
+                -H "Token: $QASE_API_TOKEN" \
+                -H "Content-Type: application/json" \
+                -d '{ "title": "Jenkins Run #${BUILD_NUMBER}" }' \
+                > qase_run.json
+            runId=\$(jq -r .result.id qase_run.json)
+            echo "Created Qase Run ID = \$runId"
+            """
         }
+    }
+}
+
 
         stage('Run Katalon Test') {
             steps {
@@ -82,21 +83,21 @@ pipeline {
         }
     
 
-    stage('Update Qase Run') {
+stage('Upload Results to Qase') {
     steps {
         withCredentials([string(credentialsId: 'QASE_API_TOKEN', variable: 'QASE_API_TOKEN')]) {
-            sh '''
-            echo "Marking Qase run as complete..."
-            runId=$(jq -r .result.id qase_run.json)
+            sh """
+            runId=\$(jq -r .result.id qase_run.json)
+            echo "Uploading results for runId=\$runId..."
 
-            curl -s -X PATCH https://api.qase.io/v1/run/${QASE_PROJECT_CODE}/$runId \
-                -H "Token: $QASE_API_TOKEN" \
-                -H "Content-Type: application/json" \
-                -d '{ "status": "completed" }'
-            '''
+            npx qase-junit upload ${QASE_PROJECT_CODE} Reports/*/JUnit_Report.xml \
+                --token=$QASE_API_TOKEN \
+                --runId=\$runId
+            """
         }
     }
 }
+
     }
 
     post {
