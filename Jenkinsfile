@@ -88,15 +88,45 @@ stage('Upload Results to Qase') {
         withCredentials([string(credentialsId: 'QASE_API_TOKEN', variable: 'QASE_API_TOKEN')]) {
             sh """
             runId=\$(jq -r .result.id qase_run.json)
-            echo "Uploading results for runId=\$runId..."
+            echo "Parsing JUnit and uploading to Qase (runId=\$runId)..."
 
-            npx qase-junit upload ${QASE_PROJECT_CODE} Reports/*/JUnit_Report.xml \
-                --token=$QASE_API_TOKEN \
-                --runId=\$runId
+            python3 << 'EOF'
+import xml.etree.ElementTree as ET
+import os, requests, sys
+
+QASE_TOKEN = os.getenv("QASE_API_TOKEN")
+PROJECT = "${QASE_PROJECT_CODE}"
+run_id = os.popen("jq -r .result.id qase_run.json").read().strip()
+
+tree = ET.parse("Reports/*/JUnit_Report.xml")
+root = tree.getroot()
+
+for testcase in root.iter("testcase"):
+    name = testcase.attrib["name"]
+    # Asumsi case_id disimpan di nama test seperti testLogin[QASE-12]
+    if "[QASE-" in name:
+        case_id = int(name.split("[QASE-")[1].split("]")[0])
+        status = "passed"
+        if testcase.find("failure") is not None:
+            status = "failed"
+
+        payload = {
+            "case_id": case_id,
+            "status": status,
+            "comment": f"Executed by Jenkins build ${BUILD_NUMBER}"
+        }
+        r = requests.post(
+            f"https://api.qase.io/v1/result/{PROJECT}/{run_id}",
+            headers={"Content-Type":"application/json","Token":QASE_TOKEN},
+            json=payload
+        )
+        print(case_id, status, r.status_code)
+EOF
             """
         }
     }
 }
+
 
     }
 
