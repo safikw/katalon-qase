@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    parameters {
+        string(name: 'RUN_ID', defaultValue: '', description: 'Qase Run ID (kosongkan kalau mau bikin baru)')
+    }
+
     environment {
         KATALON_HOME = '/opt/Katalon_Studio_Engine_Linux_arm64-10.2.4'
         APP_DRIVER_URL = 'http://localhost:4723'
@@ -45,9 +49,7 @@ pipeline {
         }
 
         stage('Setup Appium Environment') {
-            when {
-                expression { isUnix() }
-            }
+            when { expression { isUnix() } }
             steps {
                 sh '''
                 mkdir -p /tmp/Katalon/Appium
@@ -63,32 +65,36 @@ pipeline {
         }
 
         stage('Setup Appium Environment (Windows)') {
-            when {
-                expression { !isUnix() }
-            }
+            when { expression { !isUnix() } }
             steps {
                 echo 'Skipping Appium setup on Windows. Make sure Appium is installed manually.'
             }
         }
 
-        stage('Create Qase Run') {
+        stage('Create or Use Qase Run') {
             steps {
                 withCredentials([string(credentialsId: 'QASE_API_TOKEN', variable: 'QASE_API_TOKEN')]) {
                     script {
-                        if (isUnix()) {
-                            sh """
-                            curl -s -X POST https://api.qase.io/v1/run/${QASE_PROJECT_CODE} \
-                                -H "Token: $QASE_API_TOKEN" \
-                                -H "Content-Type: application/json" \
-                                -d '{ "title": "Jenkins Run #${BUILD_NUMBER}" }' \
-                                > qase_run.json
-                            runId=\$(jq -r .result.id qase_run.json)
-                            echo \$runId > run_id.txt
-                            """
+                        if (params.RUN_ID?.trim()) {
+                            echo "ℹ️ Using existing Qase run: ${params.RUN_ID}"
+                            writeFile file: 'run_id.txt', text: params.RUN_ID
                         } else {
-                            bat """
-                            powershell -Command "\$r=Invoke-RestMethod -Uri https://api.qase.io/v1/run/${QASE_PROJECT_CODE} -Method POST -Headers @{Token='$QASE_API_TOKEN';'Content-Type'='application/json'} -Body '{\"title\":\"Jenkins Run #${BUILD_NUMBER}\"}'; \$r.result.id | Out-File run_id.txt -Encoding ascii"
-                            """
+                            echo "📌 No run ID provided. Creating new run in Qase..."
+                            if (isUnix()) {
+                                sh """
+                                curl -s -X POST https://api.qase.io/v1/run/${QASE_PROJECT_CODE} \
+                                    -H "Token: $QASE_API_TOKEN" \
+                                    -H "Content-Type: application/json" \
+                                    -d '{ "title": "Jenkins Run #${BUILD_NUMBER}" }' \
+                                    > qase_run.json
+                                runId=\$(jq -r .result.id qase_run.json)
+                                echo \$runId > run_id.txt
+                                """
+                            } else {
+                                bat """
+                                powershell -Command "\$r=Invoke-RestMethod -Uri https://api.qase.io/v1/run/${QASE_PROJECT_CODE} -Method POST -Headers @{Token='$QASE_API_TOKEN';'Content-Type'='application/json'} -Body '{\"title\":\"Jenkins Run #${BUILD_NUMBER}\"}'; \$r.result.id | Out-File run_id.txt -Encoding ascii"
+                                """
+                            }
                         }
                     }
                 }
