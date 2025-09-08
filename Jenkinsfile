@@ -19,57 +19,78 @@ pipeline {
         stage('Detect Device') {
             steps {
                 script {
-                    // ambil device pertama yang statusnya "device"
-                    def deviceId = sh(
-                        script: "adb devices | awk 'NR>1 && \$2==\"device\" {print \$1; exit}'",
-                        returnStdout: true
-                    ).trim()
-
-                    if (!deviceId) {
-                        error("❌ No Android device is online!")
+                    if (isUnix()) {
+                        def deviceId = sh(
+                            script: "adb devices | awk 'NR>1 && \$2==\"device\" {print \$1; exit}'",
+                            returnStdout: true
+                        ).trim()
+                        if (!deviceId) {
+                            error("❌ No Android device is online!")
+                        }
+                        env.DEVICE_IP = deviceId
+                        echo "✅ Found device: ${deviceId}"
+                    } else {
+                        def deviceId = bat(
+                            script: 'for /f "skip=1 tokens=1" %a in (\'adb devices\') do @echo %a & goto :done\n:done',
+                            returnStdout: true
+                        ).trim()
+                        if (!deviceId) {
+                            error("❌ No Android device is online!")
+                        }
+                        env.DEVICE_IP = deviceId
+                        echo "✅ Found device: ${deviceId}"
                     }
-
-                    echo "✅ Found device: ${deviceId}"
-                    env.DEVICE_IP = deviceId
                 }
             }
         }
 
         stage('Setup Appium Environment') {
+            when {
+                expression { isUnix() }
+            }
             steps {
-                echo 'Preparing Appium temp folder and drivers...'
                 sh '''
                 mkdir -p /tmp/Katalon/Appium
 
-                set +e
                 DRIVER_INSTALLED=$(appium driver list --installed | grep uiautomator2)
                 if [ -z "$DRIVER_INSTALLED" ]; then
-                    echo "Installing uiautomator2 driver..."
                     appium driver install uiautomator2
-                else
-                    echo "Driver uiautomator2 already installed, skipping..."
                 fi
-                set -e
 
                 appium driver list
                 '''
             }
         }
 
+        stage('Setup Appium Environment (Windows)') {
+            when {
+                expression { !isUnix() }
+            }
+            steps {
+                echo 'Skipping Appium setup on Windows. Make sure Appium is installed manually.'
+            }
+        }
+
         stage('Create Qase Run') {
             steps {
                 withCredentials([string(credentialsId: 'QASE_API_TOKEN', variable: 'QASE_API_TOKEN')]) {
-                    sh """
-                    echo "Creating new Qase run..."
-                    curl -s -X POST https://api.qase.io/v1/run/${QASE_PROJECT_CODE} \
-                        -H "Token: $QASE_API_TOKEN" \
-                        -H "Content-Type: application/json" \
-                        -d '{ "title": "Jenkins Run #${BUILD_NUMBER}" }' \
-                        > qase_run.json
-                    runId=\$(jq -r .result.id qase_run.json)
-                    echo "Created Qase Run ID = \$runId"
-                    echo \$runId > run_id.txt
-                    """
+                    script {
+                        if (isUnix()) {
+                            sh """
+                            curl -s -X POST https://api.qase.io/v1/run/${QASE_PROJECT_CODE} \
+                                -H "Token: $QASE_API_TOKEN" \
+                                -H "Content-Type: application/json" \
+                                -d '{ "title": "Jenkins Run #${BUILD_NUMBER}" }' \
+                                > qase_run.json
+                            runId=\$(jq -r .result.id qase_run.json)
+                            echo \$runId > run_id.txt
+                            """
+                        } else {
+                            bat """
+                            powershell -Command "\$r=Invoke-RestMethod -Uri https://api.qase.io/v1/run/${QASE_PROJECT_CODE} -Method POST -Headers @{Token='$QASE_API_TOKEN';'Content-Type'='application/json'} -Body '{\"title\":\"Jenkins Run #${BUILD_NUMBER}\"}'; \$r.result.id | Out-File run_id.txt -Encoding ascii"
+                            """
+                        }
+                    }
                 }
             }
         }
@@ -80,23 +101,41 @@ pipeline {
                     string(credentialsId: 'KATALON_API_KEY', variable: 'KATALON_API_KEY'),
                     string(credentialsId: 'QASE_API_TOKEN', variable: 'QASE_API_TOKEN')
                 ]) {
-                    sh """
-                    runId=\$(cat run_id.txt)
-                    echo "Starting Katalon test with Qase runId=\$runId on device ${DEVICE_IP}"
-
-                    ${KATALON_HOME}/katalonc -noSplash -runMode=console \
-                        -projectPath="${PROJECT_PATH}" \
-                        -retry=0 \
-                        -testSuitePath="${TEST_SUITE}" \
-                        -browserType=Android \
-                        -deviceId=${DEVICE_IP} \
-                        -executionProfile=default \
-                        -apiKey=${KATALON_API_KEY} \
-                        --config -g_appiumDriverUrl=${APP_DRIVER_URL} -g_appiumTmpDir="/tmp/Katalon/Appium" \
-                        -g_runId=\$runId \
-                        -g_qaseToken=$QASE_API_TOKEN \
-                        -g_projectCode=${QASE_PROJECT_CODE}
-                    """
+                    script {
+                        if (isUnix()) {
+                            sh """
+                            runId=\$(cat run_id.txt)
+                            ${KATALON_HOME}/katalonc -noSplash -runMode=console \
+                                -projectPath="${PROJECT_PATH}" \
+                                -retry=0 \
+                                -testSuitePath="${TEST_SUITE}" \
+                                -browserType=Android \
+                                -deviceId=${DEVICE_IP} \
+                                -executionProfile=default \
+                                -apiKey=${KATALON_API_KEY} \
+                                --config -g_appiumDriverUrl=${APP_DRIVER_URL} -g_appiumTmpDir="/tmp/Katalon/Appium" \
+                                -g_runId=\$runId \
+                                -g_qaseToken=$QASE_API_TOKEN \
+                                -g_projectCode=${QASE_PROJECT_CODE}
+                            """
+                        } else {
+                            bat """
+                            set /p runId=<run_id.txt
+                            "%KATALON_HOME%\\katalonc" -noSplash -runMode=console ^
+                                -projectPath="%PROJECT_PATH%" ^
+                                -retry=0 ^
+                                -testSuitePath="%TEST_SUITE%" ^
+                                -browserType=Android ^
+                                -deviceId=%DEVICE_IP% ^
+                                -executionProfile=default ^
+                                -apiKey=%KATALON_API_KEY% ^
+                                --config -g_appiumDriverUrl=%APP_DRIVER_URL% -g_appiumTmpDir="%TEMP%\\\\Katalon\\\\Appium" ^
+                                -g_runId=%runId% ^
+                                -g_qaseToken=%QASE_API_TOKEN% ^
+                                -g_projectCode=%QASE_PROJECT_CODE%
+                            """
+                        }
+                    }
                 }
             }
         }
@@ -104,15 +143,22 @@ pipeline {
         stage('Close Qase Run') {
             steps {
                 withCredentials([string(credentialsId: 'QASE_API_TOKEN', variable: 'QASE_API_TOKEN')]) {
-                    sh '''
-                    runId=$(cat run_id.txt)
-                    echo "Marking Qase run $runId as completed..."
-
-                    curl -s -X PATCH https://api.qase.io/v1/run/${QASE_PROJECT_CODE}/$runId \
-                        -H "Token: $QASE_API_TOKEN" \
-                        -H "Content-Type: application/json" \
-                        -d '{ "status": "completed" }'
-                    '''
+                    script {
+                        if (isUnix()) {
+                            sh '''
+                            runId=$(cat run_id.txt)
+                            curl -s -X PATCH https://api.qase.io/v1/run/${QASE_PROJECT_CODE}/$runId \
+                                -H "Token: $QASE_API_TOKEN" \
+                                -H "Content-Type: application/json" \
+                                -d '{ "status": "completed" }'
+                            '''
+                        } else {
+                            bat """
+                            set /p runId=<run_id.txt
+                            powershell -Command "Invoke-RestMethod -Uri https://api.qase.io/v1/run/${QASE_PROJECT_CODE}/$runId -Method PATCH -Headers @{Token='$QASE_API_TOKEN';'Content-Type'='application/json'} -Body '{\"status\":\"completed\"}'"
+                            """
+                        }
+                    }
                 }
             }
         }
