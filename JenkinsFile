@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    parameters {
-        string(name: 'RUN_ID', defaultValue: '', description: 'Qase Run ID (dikirim dari Qase)')
-    }
-
     environment {
         KATALON_HOME = '/opt/Katalon_Studio_Engine_Linux_arm64-10.2.4'
         APP_DRIVER_URL = 'http://localhost:4723'
@@ -48,20 +44,6 @@ pipeline {
             }
         }
 
-        stage('Setup Appium Environment') {
-            when { expression { isUnix() } }
-            steps {
-                sh '''
-                mkdir -p /tmp/Katalon/Appium
-
-                DRIVER_INSTALLED=$(appium driver list --installed | grep uiautomator2)
-                if [ -z "$DRIVER_INSTALLED" ]; then
-                    appium driver install uiautomator2
-                fi
-                '''
-            }
-        }
-
         stage('Run Katalon Test') {
             steps {
                 withCredentials([
@@ -69,9 +51,11 @@ pipeline {
                     string(credentialsId: 'QASE_API_TOKEN', variable: 'QASE_API_TOKEN')
                 ]) {
                     script {
-                        if (!params.RUN_ID?.trim()) {
-                            error("❌ RUN_ID harus diset (dikirim dari Qase)!")
+                        if (!params.QASE_RUN_ID?.trim()) {
+                            error("❌ QASE_RUN_ID tidak diterima dari Qase!")
                         }
+                        echo "ℹ️ Running tests for Qase Run ID: ${params.QASE_RUN_ID}"
+
                         if (isUnix()) {
                             sh """
                             ${KATALON_HOME}/katalonc -noSplash -runMode=console \
@@ -83,7 +67,7 @@ pipeline {
                                 -executionProfile=default \
                                 -apiKey=${KATALON_API_KEY} \
                                 --config -g_appiumDriverUrl=${APP_DRIVER_URL} -g_appiumTmpDir="/tmp/Katalon/Appium" \
-                                -g_runId=${params.RUN_ID} \
+                                -g_runId=${params.QASE_RUN_ID} \
                                 -g_qaseToken=$QASE_API_TOKEN \
                                 -g_projectCode=${QASE_PROJECT_CODE}
                             """
@@ -98,7 +82,7 @@ pipeline {
                                 -executionProfile=default ^
                                 -apiKey=%KATALON_API_KEY% ^
                                 --config -g_appiumDriverUrl=%APP_DRIVER_URL% -g_appiumTmpDir="%TEMP%\\\\Katalon\\\\Appium" ^
-                                -g_runId=%RUN_ID% ^
+                                -g_runId=%QASE_RUN_ID% ^
                                 -g_qaseToken=%QASE_API_TOKEN% ^
                                 -g_projectCode=%QASE_PROJECT_CODE%
                             """
@@ -114,14 +98,14 @@ pipeline {
                     script {
                         if (isUnix()) {
                             sh """
-                            curl -s -X PATCH https://api.qase.io/v1/run/${QASE_PROJECT_CODE}/${params.RUN_ID} \
+                            curl -s -X PATCH https://api.qase.io/v1/run/${QASE_PROJECT_CODE}/${params.QASE_RUN_ID} \
                                 -H "Token: $QASE_API_TOKEN" \
                                 -H "Content-Type: application/json" \
                                 -d '{ "status": "completed" }'
                             """
                         } else {
                             bat """
-                            powershell -Command "Invoke-RestMethod -Uri https://api.qase.io/v1/run/${QASE_PROJECT_CODE}/%RUN_ID% -Method PATCH -Headers @{Token='$QASE_API_TOKEN';'Content-Type'='application/json'} -Body '{\"status\":\"completed\"}'"
+                            powershell -Command "Invoke-RestMethod -Uri https://api.qase.io/v1/run/${QASE_PROJECT_CODE}/%QASE_RUN_ID% -Method PATCH -Headers @{Token='$QASE_API_TOKEN';'Content-Type'='application/json'} -Body '{\"status\":\"completed\"}'"
                             """
                         }
                     }
