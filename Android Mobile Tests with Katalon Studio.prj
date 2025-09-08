@@ -4,7 +4,7 @@
    <name>Android Mobile Tests with Katalon Studio</name>
    <tag></tag>
    <UUID>68ba465c-6207-4619-976a-7a816e4c56ad</UUID>
-   <freeLicense>false</freeLicense>
+   <freeLicense>true</freeLicense>
    <migratedVersion>5.9.0</migratedVersion>
    <modifiedEdition>ENTERPRISE</modifiedEdition>
    <modifiedVersion>10.3.1</modifiedVersion>
