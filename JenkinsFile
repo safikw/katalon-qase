@@ -51,10 +51,10 @@ pipeline {
                     string(credentialsId: 'QASE_API_TOKEN', variable: 'QASE_API_TOKEN')
                 ]) {
                     script {
-                        if (!params.QASE_RUN_ID?.trim()) {
+                        if (!QASE_RUN_ID?.trim()) {
                             error("❌ QASE_RUN_ID tidak diterima dari Qase!")
                         }
-                        echo "ℹ️ Running tests for Qase Run ID: ${params.QASE_RUN_ID}"
+                        echo "ℹ️ Running tests for Qase Run ID: ${QASE_RUN_ID}"
 
                         if (isUnix()) {
                             sh """
@@ -67,7 +67,7 @@ pipeline {
                                 -executionProfile=default \
                                 -apiKey=${KATALON_API_KEY} \
                                 --config -g_appiumDriverUrl=${APP_DRIVER_URL} -g_appiumTmpDir="/tmp/Katalon/Appium" \
-                                -g_runId=${params.QASE_RUN_ID} \
+                                -g_runId=${QASE_RUN_ID} \
                                 -g_qaseToken=$QASE_API_TOKEN \
                                 -g_projectCode=${QASE_PROJECT_CODE}
                             """
@@ -98,7 +98,7 @@ pipeline {
                     script {
                         if (isUnix()) {
                             sh """
-                            curl -s -X PATCH https://api.qase.io/v1/run/${QASE_PROJECT_CODE}/${params.QASE_RUN_ID} \
+                            curl -s -X PATCH https://api.qase.io/v1/run/${QASE_PROJECT_CODE}/${QASE_RUN_ID} \
                                 -H "Token: $QASE_API_TOKEN" \
                                 -H "Content-Type: application/json" \
                                 -d '{ "status": "completed" }'
