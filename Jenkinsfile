@@ -31,7 +31,15 @@ pipeline {
                         echo "✅ Found device: ${deviceId}"
                     } else {
                         def deviceId = bat(
-                            script: 'for /f "skip=1 tokens=1" %a in (\'adb devices\') do @echo %a & goto :done\n:done',
+                            script: """
+                            for /f "skip=1 tokens=1" %%a in ('adb devices') do (
+                                if NOT "%%a"=="List" (
+                                    echo %%a
+                                    goto :done
+                                )
+                            )
+                            :done
+                            """,
                             returnStdout: true
                         ).trim()
                         if (!deviceId) {
