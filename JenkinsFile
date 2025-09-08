@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        KATALON_HOME = '/opt/Katalon_Studio_Engine_Linux_arm64-10.2.4'
+        KATALON_HOME = ''
         APP_DRIVER_URL = 'http://localhost:4723'
         TEST_SUITE = 'Test Suites/Smoke Tests for API Demos App'
         PROJECT_PATH = "${WORKSPACE}/Android Mobile Tests with Katalon Studio.prj"
@@ -10,6 +10,35 @@ pipeline {
     }
 
     stages {
+        stage('Set Katalon Home') {
+            steps {
+                script {
+                    if (isUnix()) {
+                        // Mac
+                        if (fileExists('/Applications/Katalon_Studio_Engine.app/Contents/MacOS/katalonc')) {
+                            env.KATALON_HOME = '/Applications/Katalon_Studio_Engine.app/Contents/MacOS'
+                            echo "Using Katalon Home (Mac): ${env.KATALON_HOME}"
+                        } 
+                        // Linux
+                        else if (fileExists('/opt/Katalon_Studio_Engine_Linux_64-10.2.4/katalonc')) {
+                            env.KATALON_HOME = '/opt/Katalon_Studio_Engine_Linux_64-10.2.4'
+                            echo "Using Katalon Home (Linux): ${env.KATALON_HOME}"
+                        } else {
+                            error("❌ Katalon executable not found on Unix system!")
+                        }
+                    } else {
+                        // Windows
+                        if (fileExists('C:\\Katalon\\Katalon_Studio_Engine\\katalonc.exe')) {
+                            env.KATALON_HOME = 'C:\\Katalon\\Katalon_Studio_Engine'
+                            echo "Using Katalon Home (Windows): ${env.KATALON_HOME}"
+                        } else {
+                            error("❌ Katalon executable not found on Windows!")
+                        }
+                    }
+                }
+            }
+        }
+
         stage('Checkout') {
             steps {
                 checkout scm
@@ -24,9 +53,7 @@ pipeline {
                             script: "adb devices | awk 'NR>1 && \$2==\"device\" {print \$1; exit}'",
                             returnStdout: true
                         ).trim()
-                        if (!deviceId) {
-                            error("❌ No Android device is online!")
-                        }
+                        if (!deviceId) error("❌ No Android device is online!")
                         env.DEVICE_IP = deviceId
                         echo "✅ Found device: ${deviceId}"
                     } else {
@@ -42,9 +69,7 @@ pipeline {
                             """,
                             returnStdout: true
                         ).trim()
-                        if (!deviceId) {
-                            error("❌ No Android device is online!")
-                        }
+                        if (!deviceId) error("❌ No Android device is online!")
                         env.DEVICE_IP = deviceId
                         echo "✅ Found device: ${deviceId}"
                     }
@@ -53,27 +78,21 @@ pipeline {
         }
 
         stage('Setup Appium Environment') {
-            when {
-                expression { isUnix() }
-            }
+            when { expression { isUnix() } }
             steps {
                 sh '''
                 mkdir -p /tmp/Katalon/Appium
-
                 DRIVER_INSTALLED=$(appium driver list --installed | grep uiautomator2)
                 if [ -z "$DRIVER_INSTALLED" ]; then
                     appium driver install uiautomator2
                 fi
-
                 appium driver list
                 '''
             }
         }
 
         stage('Setup Appium Environment (Windows)') {
-            when {
-                expression { !isUnix() }
-            }
+            when { expression { !isUnix() } }
             steps {
                 echo 'Skipping Appium setup on Windows. Make sure Appium is installed manually.'
             }
@@ -173,14 +192,8 @@ pipeline {
     }
 
     post {
-        always {
-            echo "Pipeline finished."
-        }
-        success {
-            echo "✅ Build succeeded!"
-        }
-        failure {
-            echo "❌ Build failed!"
-        }
+        always { echo "Pipeline finished." }
+        success { echo "✅ Build succeeded!" }
+        failure { echo "❌ Build failed!" }
     }
 }
