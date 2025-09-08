@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         KATALON_HOME = '/opt/Katalon_Studio_Engine_Linux_arm64-10.2.4'
-        DEVICE_IP = '172.20.10.8:7401'
         APP_DRIVER_URL = 'http://localhost:4723'
         TEST_SUITE = 'Test Suites/Smoke Tests for API Demos App'
         PROJECT_PATH = "${WORKSPACE}/Android Mobile Tests with Katalon Studio.prj"
@@ -17,9 +16,22 @@ pipeline {
             }
         }
 
-        stage('Check Device') {
+        stage('Detect Device') {
             steps {
-                sh 'adb devices'
+                script {
+                    // ambil device pertama yang statusnya "device"
+                    def deviceId = sh(
+                        script: "adb devices | awk 'NR>1 && \$2==\"device\" {print \$1; exit}'",
+                        returnStdout: true
+                    ).trim()
+
+                    if (!deviceId) {
+                        error("❌ No Android device is online!")
+                    }
+
+                    echo "✅ Found device: ${deviceId}"
+                    env.DEVICE_IP = deviceId
+                }
             }
         }
 
@@ -70,7 +82,7 @@ pipeline {
                 ]) {
                     sh """
                     runId=\$(cat run_id.txt)
-                    echo "Starting Katalon test with Qase runId=\$runId"
+                    echo "Starting Katalon test with Qase runId=\$runId on device ${DEVICE_IP}"
 
                     ${KATALON_HOME}/katalonc -noSplash -runMode=console \
                         -projectPath="${PROJECT_PATH}" \
