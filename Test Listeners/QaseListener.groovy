@@ -38,7 +38,6 @@ class QaseListener {
 
         def status = testCaseContext.getTestCaseStatus() == "PASSED" ? "passed" : "failed"
         def testCaseName = testCaseContext.getTestCaseId()
-
         def caseId = extractCaseId(testCaseName)
         println "🔍 [Qase Debug] Extracted caseId = $caseId from testCaseName = $testCaseName"
 
@@ -69,7 +68,6 @@ class QaseListener {
 
             println "✅ [Qase Debug] Response Code = $responseCode"
             println "✅ [Qase Debug] Response Body = $responseText"
-
             println "📡 Sent result for case ${caseId} = ${status}"
         } catch (Exception e) {
             println "❌ Failed to send result to Qase: " + e.message
@@ -77,15 +75,19 @@ class QaseListener {
         }
     }
 
-    private Integer extractCaseId(String name) {
-        // Format test case di Katalon: "TC01 [QASE-123]"
-        if (name.contains("[QASE-")) {
-            try {
-                return Integer.parseInt(name.split("\\[QASE-")[1].split("]")[0])
-            } catch (Exception ignored) {
-                println "⚠️ [Qase Debug] Failed to parse caseId from name=$name"
+    private Integer extractCaseId(String fullName) {
+        def shortName = fullName.tokenize('/').last()
+        def patterns = [
+            ~/(?i)\( *(?:QASE|CASE|MKQ)- *(\d+) *\)/,
+            ~/(?i)\b(?:QASE|CASE|MKQ)-(\d+)\b/
+        ]
+        for (p in patterns) {
+            def m = (shortName =~ p)
+            if (m.find()) {
+                return Integer.parseInt(m.group(1))
             }
         }
+        println "⚠️ [Qase Debug] No case id token found in shortName='$shortName'"
         return null
     }
 }

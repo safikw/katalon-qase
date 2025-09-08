@@ -15,7 +15,7 @@
       <guid>9eb14078-21e6-435b-9587-31e88946038f</guid>
       <isReuseDriver>false</isReuseDriver>
       <isRun>true</isRun>
-      <testCaseId>Test Cases/Verify Correct Alarm Message</testCaseId>
+      <testCaseId>Test Cases/Verify Correct Alarm Message (QASE-1) Verify Correct Alarm Message (QASE-1)</testCaseId>
       <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
    </testCaseLink>
    <testCaseLink>
